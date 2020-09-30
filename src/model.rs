@@ -1,21 +1,4 @@
-use sqlx::types::chrono;
+pub mod mutation;
+pub mod query;
 
-#[derive(Debug)]
-pub struct Post {
-    pub id: u32,
-    pub title: String,
-    pub intro: Option<String>,
-    pub contents: Option<String>,
-    pub body: String,
-    pub created: chrono::NaiveDateTime,
-    pub edited: Option<chrono::NaiveDateTime>,
-    pub read_time: u32,
-    pub collection_id: Option<u32>,
-}
-
-pub struct PostInput {
-    pub title: String,
-    pub intro: Option<String>,
-    pub body: String,
-    pub collection_id: Option<u32>,
-}
+pub mod post;

@@ -1,6 +1,6 @@
 use sqlx::MySqlPool;
 
-use crate::model::{Post, PostInput};
+use crate::model::post::{Post, PostInput};
 use crate::utils;
 
 pub struct Database {
