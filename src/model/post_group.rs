@@ -21,7 +21,24 @@ pub struct PostGroup {
 }
 
 #[Object]
-impl PostGroup {}
+impl PostGroup {
+    async fn id(&self) -> u32 {
+        self.id
+    }
+    async fn title(&self) -> &str {
+        &self.title
+    }
+    async fn intro(&self) -> Option<&str> {
+        self.intro.as_deref()
+    }
+    async fn updated(&self) -> chrono::NaiveDateTime {
+        self.updated
+    }
+    async fn group_type(&self) -> PostGroupType {
+        self.group_type
+    }
+    // TODO: article_count, read_time_avg
+}
 
 #[derive(InputObject)]
 pub struct PostGroupInput {
