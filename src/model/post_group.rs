@@ -4,6 +4,8 @@ use sqlx::types::chrono;
 
 use crate::database::Database;
 
+use super::post::Post;
+
 #[derive(sqlx::Type, Debug, Enum, Eq, PartialEq, Copy, Clone)]
 #[sqlx(rename_all = "lowercase")]
 pub enum PostGroupType {
@@ -51,6 +53,12 @@ impl PostGroup {
         let avg = db.get_read_time_avg(self.id).await?;
 
         Ok(avg)
+    }
+    async fn posts(&self, ctx: &Context<'_>) -> FieldResult<Vec<Post>> {
+        let db = ctx.data::<Database>()?;
+        let posts = db.get_posts_by_group(self.id).await?;
+
+        Ok(posts)
     }
 }
 

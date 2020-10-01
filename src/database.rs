@@ -27,6 +27,12 @@ impl Database {
 
         Ok(post)
     }
+    pub async fn get_posts_by_group(&self, group_id: u32) -> Result<Vec<Post>> {
+        let posts = sqlx::query_as!(Post, "SELECT * FROM post WHERE group_id = ?", group_id)
+            .fetch_all(&self.pool)
+            .await?;
+        Ok(posts)
+    }
     pub async fn create_post(&self, post: PostInput) -> Result<u32> {
         let contents = utils::get_contents(&post.body).join("\n");
         let read_time = utils::get_read_time(&post.body);

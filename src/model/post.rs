@@ -1,5 +1,9 @@
-use async_graphql::{InputObject, Object};
+use async_graphql::{Context, FieldResult, InputObject, Object};
 use sqlx::types::chrono;
+
+use crate::database::Database;
+
+use super::post_group::PostGroup;
 
 #[derive(Debug)]
 pub struct Post {
@@ -42,9 +46,14 @@ impl Post {
     async fn read_time(&self) -> u32 {
         self.read_time
     }
-    async fn group_id(&self) -> Option<u32> {
-        //TODO: change to return Collection
-        self.group_id
+    async fn group(&self, ctx: &Context<'_>) -> FieldResult<Option<PostGroup>> {
+        let db = ctx.data::<Database>()?;
+        let post_group = match self.group_id {
+            Some(id) => db.get_post_group_by_id(id).await?,
+            None => return Ok(None),
+        };
+
+        Ok(Some(post_group))
     }
 }
 
