@@ -33,13 +33,12 @@ impl Database {
             .await?;
         Ok(posts)
     }
-    pub async fn create_post(&self, post: PostInput) -> Result<u32> {
+    pub async fn create_post(&self, post: PostInput) -> Result<Post> {
         let contents = utils::get_contents(&post.body).join("\n");
         let read_time = utils::get_read_time(&post.body);
 
         let post_id = sqlx::query!(
-            "INSERT INTO post (title, intro, contents, body, read_time, group_id)
-            VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO post (title, intro, contents, body, read_time, group_id) VALUES (?, ?, ?, ?, ?, ?)",
             post.title,
             post.intro,
             contents,
@@ -51,7 +50,9 @@ impl Database {
         .await?
         .last_insert_id() as u32;
 
-        Ok(post_id)
+        let new_post = self.get_post_by_id(post_id).await?;
+
+        Ok(new_post)
     }
 }
 
@@ -92,7 +93,7 @@ impl Database {
         Ok(avg)
     }
 
-    pub async fn create_post_group(&self, post_group: PostGroupInput) -> Result<u32> {
+    pub async fn create_post_group(&self, post_group: PostGroupInput) -> Result<PostGroup> {
         let post_group_id = sqlx::query!(
             "INSERT INTO post_group (title, intro, group_type) VALUES (?, ?, ?)",
             post_group.title,
@@ -103,6 +104,8 @@ impl Database {
         .await?
         .last_insert_id() as u32;
 
-        Ok(post_group_id)
+        let new_post_group = self.get_post_group_by_id(post_group_id).await?;
+
+        Ok(new_post_group)
     }
 }
