@@ -32,14 +32,14 @@ impl Database {
         let read_time = utils::get_read_time(&post.body);
 
         let post_id = sqlx::query!(
-            "INSERT INTO post (title, intro, contents, body, read_time, collection_id)
+            "INSERT INTO post (title, intro, contents, body, read_time, group_id)
             VALUES (?, ?, ?, ?, ?, ?)",
             post.title,
             post.intro,
             contents,
             post.body,
             read_time,
-            post.collection_id
+            post.group_id
         )
         .execute(&self.pool)
         .await?
@@ -60,6 +60,30 @@ impl Database {
         .await?;
 
         Ok(post_group)
+    }
+
+    pub async fn get_post_group_count(&self, id: u32) -> Result<i64> {
+        let count = sqlx::query!("SELECT count(id) AS count FROM post WHERE group_id = ?", id)
+            .fetch_one(&self.pool)
+            .await?
+            .count;
+
+        Ok(count)
+    }
+
+    pub async fn get_read_time_avg(&self, id: u32) -> Result<u32> {
+        let avg: String = sqlx::query!(
+            "SELECT CAST(ROUND(AVG(read_time)) AS CHAR(10)) AS avg FROM post WHERE group_id = ?",
+            id
+        )
+        .fetch_one(&self.pool)
+        .await?
+        .avg
+        .ok_or(anyhow::anyhow!("Cannot get average of read time"))?;
+
+        let avg = avg.parse::<u32>()?;
+
+        Ok(avg)
     }
 
     pub async fn create_post_group(&self, post_group: PostGroupInput) -> Result<u32> {

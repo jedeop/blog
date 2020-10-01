@@ -1,6 +1,8 @@
-use async_graphql::{Enum, InputObject, Object};
+use async_graphql::{Context, Enum, FieldResult, InputObject, Object};
 
 use sqlx::types::chrono;
+
+use crate::database::Database;
 
 #[derive(sqlx::Type, Debug, Enum, Eq, PartialEq, Copy, Clone)]
 #[sqlx(rename_all = "lowercase")]
@@ -38,6 +40,18 @@ impl PostGroup {
         self.group_type
     }
     // TODO: article_count, read_time_avg
+    async fn article_count(&self, ctx: &Context<'_>) -> FieldResult<i64> {
+        let db = ctx.data::<Database>()?;
+        let count = db.get_post_group_count(self.id).await?;
+
+        Ok(count)
+    }
+    async fn read_time_avg(&self, ctx: &Context<'_>) -> FieldResult<u32> {
+        let db = ctx.data::<Database>()?;
+        let avg = db.get_read_time_avg(self.id).await?;
+
+        Ok(avg)
+    }
 }
 
 #[derive(InputObject)]

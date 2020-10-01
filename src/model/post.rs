@@ -11,7 +11,7 @@ pub struct Post {
     pub created: chrono::NaiveDateTime,
     pub edited: Option<chrono::NaiveDateTime>,
     pub read_time: u32,
-    pub collection_id: Option<u32>,
+    pub group_id: Option<u32>,
 }
 
 #[Object]
@@ -42,9 +42,9 @@ impl Post {
     async fn read_time(&self) -> u32 {
         self.read_time
     }
-    async fn collection_id(&self) -> Option<u32> {
+    async fn group_id(&self) -> Option<u32> {
         //TODO: change to return Collection
-        self.collection_id
+        self.group_id
     }
 }
 
@@ -53,5 +53,5 @@ pub struct PostInput {
     pub title: String,
     pub intro: Option<String>,
     pub body: String,
-    pub collection_id: Option<u32>,
+    pub group_id: Option<u32>,
 }
