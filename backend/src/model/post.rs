@@ -1,9 +1,9 @@
-use async_graphql::{Context, FieldResult, InputObject, Object};
+use async_graphql::{Context, FieldResult, InputObject, Object, SimpleObject};
 use sqlx::types::chrono;
 
 use crate::{database::Database, utils};
 
-use super::post_group::PostGroup;
+use super::{pagination::Edge, post_group::PostGroup};
 
 #[derive(Debug)]
 pub struct Post {
@@ -56,4 +56,9 @@ pub struct PostInput {
     pub intro: Option<String>,
     pub contents: String,
     pub group_id: Option<u64>,
+}
+
+#[derive(SimpleObject)]
+pub struct PostConnection {
+    pub edges: Vec<Edge<Post>>,
 }

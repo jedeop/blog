@@ -942,6 +942,7 @@ dependencies = [
  "anyhow",
  "async-graphql",
  "async-graphql-warp",
+ "base64 0.13.0",
  "dotenv",
  "sqlx",
  "tokio",

@@ -1,4 +1,5 @@
 use anyhow::Result;
+use base64;
 use sqlx::MySqlPool;
 
 use crate::model::post_group::PostGroup;
@@ -31,6 +32,19 @@ impl Database {
         let posts = sqlx::query_as!(Post, "SELECT * FROM post WHERE group_id = ?", group_id)
             .fetch_all(&self.pool)
             .await?;
+        Ok(posts)
+    }
+    pub async fn get_posts(&self, first: u64, after: &str) -> Result<Vec<Post>> {
+        let after = base64::decode(after)?;
+        let posts: Vec<Post> = sqlx::query_as!(
+            Post,
+            "SELECT * FROM post WHERE created > ? LIMIT ?",
+            after,
+            first
+        )
+        .fetch_all(&self.pool)
+        .await?;
+
         Ok(posts)
     }
     pub async fn create_post(&self, post: PostInput) -> Result<Post> {
@@ -75,15 +89,18 @@ impl Database {
 
     pub async fn get_read_time_avg(&self, id: u64) -> Result<usize> {
         let posts = self.get_posts_by_group(id).await?;
-        
+
         let len = posts.len();
-        
+
         if len == 0 {
-            return Ok(0)
+            return Ok(0);
         }
 
-        let total_time: usize = posts.iter().map(|post| utils::get_read_time(&post.contents)).sum();
-        
+        let total_time: usize = posts
+            .iter()
+            .map(|post| utils::get_read_time(&post.contents))
+            .sum();
+
         let avg = total_time / len;
 
         Ok(avg)
