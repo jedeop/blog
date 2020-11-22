@@ -75,10 +75,16 @@ impl Database {
 
     pub async fn get_read_time_avg(&self, id: u64) -> Result<usize> {
         let posts = self.get_posts_by_group(id).await?;
+        
+        let len = posts.len();
+        
+        if len == 0 {
+            return Ok(0)
+        }
 
         let total_time: usize = posts.iter().map(|post| utils::get_read_time(&post.contents)).sum();
         
-        let avg = total_time / posts.len();
+        let avg = total_time / len;
 
         Ok(avg)
     }

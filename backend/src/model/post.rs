@@ -1,7 +1,7 @@
 use async_graphql::{Context, FieldResult, InputObject, Object};
 use sqlx::types::chrono;
 
-use crate::database::Database;
+use crate::{database::Database, utils};
 
 use super::post_group::PostGroup;
 
@@ -35,6 +35,9 @@ impl Post {
     }
     async fn edited(&self) -> Option<chrono::NaiveDateTime> {
         self.edited
+    }
+    async fn read_time(&self) -> u64 {
+        utils::get_read_time(&self.contents) as u64
     }
     async fn group(&self, ctx: &Context<'_>) -> FieldResult<Option<PostGroup>> {
         let db = ctx.data::<Database>()?;
