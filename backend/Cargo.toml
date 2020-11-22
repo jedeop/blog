@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 sqlx = { version = "0.4.1", default-features = false, features = [ "runtime-tokio-native-tls", "mysql", "macros", "chrono" ] } 
-tokio = { version = "0.3", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "0.2", features = ["macros"] }
 async-graphql = "2.1.2"
 async-graphql-warp = "2.1.2"
 warp = "0.2"

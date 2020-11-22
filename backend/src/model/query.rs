@@ -7,7 +7,7 @@ pub struct QueryRoot;
 
 #[Object]
 impl QueryRoot {
-    async fn post(&self, ctx: &Context<'_>, id: u32) -> FieldResult<Post> {
+    async fn post(&self, ctx: &Context<'_>, id: u64) -> FieldResult<Post> {
         let db = ctx.data::<Database>()?;
 
         let post = db.get_post_by_id(id).await?;
@@ -15,7 +15,7 @@ impl QueryRoot {
         Ok(post)
     }
 
-    async fn post_group(&self, ctx: &Context<'_>, id: u32) -> FieldResult<PostGroup> {
+    async fn post_group(&self, ctx: &Context<'_>, id: u64) -> FieldResult<PostGroup> {
         let db = ctx.data::<Database>()?;
 
         let post_group = db.get_post_group_by_id(id).await?;
