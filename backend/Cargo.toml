@@ -7,10 +7,10 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sqlx = { version = "0.4.0-beta.1", default-features = false, features = [ "runtime-tokio", "mysql", "macros", "chrono" ] } 
-tokio = { version = "0.2", features = ["macros"] }
-async-graphql = "2.0.0-alpha.21"
-async-graphql-warp = "2.0.0-alpha.21"
+sqlx = { version = "0.4.1", default-features = false, features = [ "runtime-tokio-native-tls", "mysql", "macros", "chrono" ] } 
+tokio = { version = "0.3", features = ["macros", "rt-multi-thread"] }
+async-graphql = "2.1.2"
+async-graphql-warp = "2.1.2"
 warp = "0.2"
 anyhow = "1.0"
 dotenv = "0.15"
