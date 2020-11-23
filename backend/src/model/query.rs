@@ -1,7 +1,6 @@
 use async_graphql::{Context, FieldResult, Object};
 
 use super::{
-    pagination::Edge,
     post::{Post, PostConnection},
     post_group::PostGroup,
 };
@@ -22,22 +21,12 @@ impl QueryRoot {
     async fn posts(
         &self,
         ctx: &Context<'_>,
-        first: u64,
-        after: String,
+        first: Option<u64>,
+        after: Option<String>,
     ) -> FieldResult<PostConnection> {
         let db = ctx.data::<Database>()?;
 
-        let posts = db.get_posts(first, &after).await?;
-
-        let edges: Vec<Edge<Post>> = posts
-            .into_iter()
-            .map(|post| {
-                let cursor = base64::encode(post.created.to_string());
-                Edge::<Post> { node: post, cursor }
-            })
-            .collect();
-
-        let post_connection = PostConnection { edges };
+        let post_connection = PostConnection::new(&db, first, after.as_deref()).await?;
 
         Ok(post_connection)
     }

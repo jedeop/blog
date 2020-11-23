@@ -34,8 +34,17 @@ impl Database {
             .await?;
         Ok(posts)
     }
-    pub async fn get_posts(&self, first: u64, after: &str) -> Result<Vec<Post>> {
-        let after = base64::decode(after)?;
+    pub async fn get_posts(&self, first: Option<u64>, after: Option<&str>) -> Result<Vec<Post>> {
+        let first = first.unwrap_or(10);
+
+        let after = match after {
+            Some(after) => {
+                let decode = base64::decode(after)?;
+                String::from_utf8(decode)?
+            }
+            None => "1000-01-01 00:00:00".to_string(),
+        };
+
         let posts: Vec<Post> = sqlx::query_as!(
             Post,
             "SELECT * FROM post WHERE created > ? LIMIT ?",

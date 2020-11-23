@@ -1,3 +1,4 @@
+use anyhow::Result;
 use async_graphql::{Context, FieldResult, InputObject, Object, SimpleObject};
 use sqlx::types::chrono;
 
@@ -61,4 +62,24 @@ pub struct PostInput {
 #[derive(SimpleObject)]
 pub struct PostConnection {
     pub edges: Vec<Edge<Post>>,
+}
+
+impl PostConnection {
+    pub async fn new(
+        db: &Database,
+        first: Option<u64>,
+        after: Option<&str>,
+    ) -> Result<PostConnection> {
+        let posts = db.get_posts(first, after).await?;
+
+        let edges: Vec<Edge<Post>> = posts
+            .into_iter()
+            .map(|post| {
+                let cursor = base64::encode(post.created.to_string());
+                Edge::<Post> { node: post, cursor }
+            })
+            .collect();
+
+        Ok(PostConnection { edges })
+    }
 }
