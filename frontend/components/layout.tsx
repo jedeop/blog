@@ -1,16 +1,17 @@
 import Head from 'next/head'
+import Logo from '../components/logo'
+import styles from '../styles/layout.module.scss'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>제덮 블로그</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        <h1>
+      <header className={styles.header}>
+          <Logo height={30} />
           블로그
-        </h1>
       </header>
       <main>
         {children}
