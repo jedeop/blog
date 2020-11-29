@@ -1,9 +1,7 @@
-export interface Post {
+export interface PostForList {
   id: number,
   title: string,
   intro?: string,
-  contents: string,
-  created: Date,
-  edited?: Date,
+  created: string,
   readTime: number,
 }
