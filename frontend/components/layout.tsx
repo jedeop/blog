@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className={styles.header}>
-          <Logo height={30} />
+          <Logo width={100} />
           <span>블로그</span>
       </header>
       <main>
