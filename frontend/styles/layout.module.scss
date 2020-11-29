@@ -5,8 +5,16 @@
 }
 
 .header {
-  padding: 10px;
+  padding: 5px 15px;
   background: linear-gradient(272deg, #61CDB7 0%, #24B799 100%);
-  font-size: 30px;
+  font-size: 25px;
+  font-weight: bold;
   color: white;
+  
+  display: flex;
+  align-items: center;
+  
+  :nth-child(1) {
+    margin-right: 5px;
+  }
 }

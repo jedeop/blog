@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Head>
       <header className={styles.header}>
           <Logo height={30} />
-          블로그
+          <span>블로그</span>
       </header>
       <main>
         {children}
