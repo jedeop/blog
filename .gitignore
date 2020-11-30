@@ -1,3 +1,8 @@
 /backend/target
 .env
 .docker
+
+node_modules
+.cache
+dist
+*.log
