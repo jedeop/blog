@@ -2,6 +2,7 @@ import Koa from 'koa'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import App from './App'
 
@@ -21,27 +22,26 @@ app.use(ctx => {
     </StaticRouter>
   )
 
-  if (context.url) {
-    ctx.redirect(context.url);
-  } else {
-    const html = `
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic SSR</title>
-</head>
-<body>
-  <div id="root">
-    ${content}
-  </div>
-  <script src="./index.js"></script>
-</body>
-</html>
+  const helmet = Helmet.renderStatic()
+  const html = `
+      <!doctype html>
+      <html ${helmet.htmlAttributes.toString()}>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            ${helmet.title.toString()}
+            ${helmet.meta.toString()}
+            ${helmet.link.toString()}
+        </head>
+        <body ${helmet.bodyAttributes.toString()}>
+            <div id="root">
+              ${content}
+            </div>
+            <script src="/index.js"></script>
+        </body>
+    </html>
   `
-    ctx.body = html;
-  }
+  ctx.body = html;
 })
 
 app.listen(PORT);
