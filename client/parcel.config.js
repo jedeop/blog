@@ -13,7 +13,6 @@ async function bundleServer() {
 
     outDir: OUT_DIR,
     outFile: 'server.js',
-    watch: false,
     logLevel: 4,
   };
 
@@ -31,7 +30,6 @@ async function bundleClient() {
 
     outDir: OUT_DIR,
     outFile: 'index.js',
-    watch: false,
     logLevel: 4,
   };
 

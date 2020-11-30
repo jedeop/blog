@@ -4,8 +4,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "parcel index.html",
-    "build": "node parcel.config.js"
+    "dev": "NODE_ENV=development node parcel.config.js",
+    "build": "NODE_ENV=production node parcel.config.js",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "koa": "^2.13.0",
