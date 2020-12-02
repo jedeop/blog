@@ -1,0 +1,10 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    "@babel/preset-env",
+    "@babel/typescript"
+  ],
+  "plugins": [
+    "@loadable/babel-plugin"
+  ]
+}

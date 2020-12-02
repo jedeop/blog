@@ -1,27 +1,26 @@
 const path = require('path');
+const LoadablePlugin = require('@loadable/webpack-plugin')
 
 module.exports = {
-  mode: process.env.NODE_ENV == 'production'? 'production' : 'development',
-  entry: './src/index.tsx',
+  name: `client`,
+  mode: process.env.NODE_ENV == 'production' ? 'production' : 'development',
+  entry: `./src/client.tsx`,
   output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    path: path.resolve(__dirname, `dist/client/`),
+    publicPath: `/dist/`,
   },
   module: {
     rules: [
       {
-        test: /\.{jsx?,tsx?}$/,
-        exclude: /node_modules/,
-        use: 'swc-loader',
-      },
-      {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: 'ts-loader',
+        use: ['babel-loader', 'ts-loader'],
       },
     ]
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-};
+  plugins: [new LoadablePlugin()],
+}
