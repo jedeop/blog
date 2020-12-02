@@ -9,8 +9,8 @@ interface LogoProps {
 export default function Logo({ width, height, color = "#FFFFFF" }: LogoProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" 
-      width={width ? width : "auto"}
-      height={height ? height : "auto"}
+      width={width ? width : undefined}
+      height={height ? height : undefined}
       fill={color}
       viewBox="0 0 300 90"
     >
