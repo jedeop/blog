@@ -28,7 +28,7 @@ app.use(async ctx => {
   const client = new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
-      uri: 'http://localhost:8888/graphql',
+      uri: 'http://localhost:8000',
       credentials: 'same-origin',
       headers: {
         cookie: ctx.get('Cookie'),

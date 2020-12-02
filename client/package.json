@@ -15,6 +15,7 @@
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",
     "cross-fetch": "^3.0.6",
+    "date-fns": "^2.16.1",
     "graphql": "^15.4.0",
     "koa": "^2.13.0",
     "koa-mount": "^4.0.0",

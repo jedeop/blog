@@ -1,3 +1,4 @@
+import PostList from '@/components/postList'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
@@ -6,7 +7,7 @@ const Home = () => (
     <Helmet>
       <title>Basic SSR: Home</title>
     </Helmet>
-    <h1>Home</h1>
+    <PostList />
   </div>
 )
 
