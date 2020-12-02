@@ -6,17 +6,23 @@
   "scripts": {
     "build": "yarn build:client && yarn build:server",
     "build:client": "webpack --env MODE=client",
-    "build:server": "webpack --env MODE=server"
+    "build:server": "webpack --env MODE=server",
+    "start": "node ./dist/server/main.js"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.2",
+    "@apollo/react-ssr": "^4.0.0",
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",
+    "cross-fetch": "^3.0.6",
+    "graphql": "^15.4.0",
     "koa": "^2.13.0",
     "koa-mount": "^4.0.0",
     "koa-static": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
+    "react-is": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.2.1"
   },
