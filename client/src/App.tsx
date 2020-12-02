@@ -1,20 +1,54 @@
 import React from 'react'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import loadable from '@loadable/component'
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
 
-const Home = loadable(() => import('./Home'))
-const About = loadable(() => import('./About'))
+import Logo from '@/components/logo'
+import GlobalStyle from '@/styles/global'
+
+const Home = loadable(() => import('@/pages/Home'))
+
+const Container = styled.div`
+  background-color: #F8F8F8;
+  min-height: 100vh;
+  width: 100vw;
+`
+
+const Header = styled.header`
+  padding: 5px 15px;
+  background: linear-gradient(272deg, #61CDB7 0%, #24B799 100%);
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+  
+  display: flex;
+  align-items: center;
+`
+
+const Title = styled.span`
+  margin-left: 5px;
+`
 
 const App = () => (
-  <div>
-    <Link to="/">Home</Link>
-    <Link to="/about">About</Link>
-
-    <Switch>
-      <Route path="/about" render={() => <About />} />
-      <Route path="/" render={() => <Home />} />
-    </Switch>
-  </div>
+  <Container>
+    <GlobalStyle />
+    <Helmet>
+      <title>제덮 블로그</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Helmet>
+    <Header>
+      <Logo width={100} />
+      <Title>블로그</Title>
+    </Header>
+    <main>
+      <Switch>
+        <Route exact path="/" render={() => <Home />} />
+      </Switch>
+    </main>
+    <footer>
+    </footer>
+  </Container>
 )
 
 export default App
