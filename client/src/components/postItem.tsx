@@ -3,11 +3,14 @@ import { PostForList } from '@/types/post'
 import formatDate from 'date-fns/format'
 import parseDate from 'date-fns/parse'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { Clock } from 'react-feather'
 
 const Main = styled.div`
   background-color: white;
-  padding: 20px;
-  margin: 15px 0px;
+  padding: 15px;
+  margin: 30px 0px;
+  line-height: 1.2;
 `
 const Title = styled.div`
   font-weight: bold;
@@ -22,22 +25,29 @@ const Intro = styled.div`
 const Meta = styled.div`
   font-size: 16px;
   color: #9b9b9b;
-  text-align: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`
+const StyledClock = styled(Clock)`
+margin-right: 3px;
 `
 
 interface PostItemProps {
   post: PostForList
 }
 export default function PostItem({ post }: PostItemProps) {
-  const { title, intro, readTime, created } = post;
+  const { title, intro, readTime, created, id } = post;
 
   return (
-    <Main>
-      <Title>{title}</Title>
-      <SubTitle>
-        <Intro>{intro}</Intro>
-        <Meta>{readTime}분 | {formatDate(parseDate(created, 'yyyy-MM-dd HH:mm:SS', new Date()), 'yyyy.MM.dd')}</Meta>
-      </SubTitle>
-    </Main>
+    <Link to={`/${id}`} >
+      <Main>
+        <Title>{title}</Title>
+        <SubTitle>
+          <Intro>{intro}</Intro>
+          <Meta><StyledClock size={16} />{readTime}분 | {formatDate(parseDate(created, 'yyyy-MM-dd HH:mm:SS', new Date()), 'yyyy.MM.dd')}</Meta>
+        </SubTitle>
+      </Main>
+    </Link>
   )
 }

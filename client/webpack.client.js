@@ -1,9 +1,12 @@
 const path = require('path');
 const LoadablePlugin = require('@loadable/webpack-plugin')
 
+const isDevMode =  process.env.node_env !== 'production'
+
 module.exports = {
   name: `client`,
-  mode: process.env.NODE_ENV == 'production' ? 'production' : 'development',
+  mode: isDevMode ? 'production' : 'development',
+  watch: isDevMode,
   entry: `./src/client.tsx`,
   output: {
     filename: '[name].js',

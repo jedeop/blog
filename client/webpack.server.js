@@ -1,9 +1,12 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
+const isDevMode =  process.env.node_env !== 'production'
+
 module.exports = {
   name: 'server',
-  mode: process.env.NODE_ENV == 'production'? 'production' : 'development',
+  mode: isDevMode? 'production' : 'development',
+  watch: isDevMode,
   target: 'node',
   node: false,
   entry: './src/server.tsx',
