@@ -4,11 +4,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "yarn build:client && yarn build:server",
-    "build:client": "NODE_ENV=production webpack --env MODE=client",
-    "build:server": "NODE_ENV=production webpack --env MODE=server",
-    "watch:client": "NODE_ENV=development webpack --env MODE=client",
-    "watch:server": "NODE_ENV=development webpack --env MODE=server",
+    "build": "NODE_ENV=production webpack",
+    "watch": "NODE_ENV=development webpack",
     "start": "node ./dist/server/main.js"
   },
   "dependencies": {
