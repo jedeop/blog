@@ -16,8 +16,6 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 25px;
 `
-const SubTitle = styled.div`
-`
 const Intro = styled.div`
   font-size: 20px;
   color: #707070;
@@ -28,6 +26,10 @@ const Meta = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+`
+const Hr = styled.div`
+  margin: 5px 0px;
+  border-top: 1px solid hsl(0, 0%, 90%);
 `
 const StyledClock = styled(Clock)`
 margin-right: 3px;
@@ -43,10 +45,9 @@ export default function PostItem({ post }: PostItemProps) {
     <Link to={`/post/${id}`} >
       <Main>
         <Title>{title}</Title>
-        <SubTitle>
-          <Intro>{intro}</Intro>
-          <Meta><StyledClock size={16} />{readTime}분 | {formatDate(parseDate(created, 'yyyy-MM-dd HH:mm:SS', new Date()), 'yyyy.MM.dd')}</Meta>
-        </SubTitle>
+        <Intro>{intro}</Intro>
+        <Hr />
+        <Meta><StyledClock size={16} />{readTime}분 | {formatDate(parseDate(created, 'yyyy-MM-dd HH:mm:SS', new Date()), 'yyyy.MM.dd')}</Meta>
       </Main>
     </Link>
   )
