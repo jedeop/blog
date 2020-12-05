@@ -50,7 +50,7 @@ const Post = () => {
   return (
     <div>
       <Container>
-        <PostTitle title={post.title} />
+        <PostTitle title={post.title} created={post.created} readTime={post.readTime} />
         <PostContents contents={post.contents} />
       </Container>
       <Link to="/">글 목록으로 돌아가기</Link>

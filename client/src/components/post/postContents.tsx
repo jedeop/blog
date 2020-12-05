@@ -7,7 +7,7 @@ interface PostContentsProp {
 
 const PostContents = ({ contents }: PostContentsProp) => {
   return (
-    <ReactMarkdown children={contents} />
+    <ReactMarkdown plugins={[]} children={contents} />
   )
 }
 

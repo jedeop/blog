@@ -22,7 +22,7 @@ const Intro = styled.div`
 `
 const Meta = styled.div`
   font-size: 16px;
-  color: #9b9b9b;
+  color: hsl(0, 0%, 60%);
   display: flex;
   align-items: center;
   justify-content: flex-end;
