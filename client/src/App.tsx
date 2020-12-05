@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 import loadable from '@loadable/component'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
@@ -21,7 +21,9 @@ const Header = styled.header`
   font-size: 25px;
   font-weight: bold;
   color: white;
-  
+`
+
+const FlexLink = styled(Link)`
   display: flex;
   align-items: center;
 `
@@ -38,13 +40,15 @@ const App = () => (
       <link rel="icon" href="/favicon.ico" />
     </Helmet>
     <Header>
-      <Logo width={100} />
-      <Title>블로그</Title>
+      <FlexLink to="/">
+        <Logo width={100} />
+        <Title>블로그</Title>
+      </FlexLink>
     </Header>
     <main>
       <Switch>
         <Route exact path="/" render={() => <Home />} />
-        <Route path="/:postId">
+        <Route path="/post/:postId">
           <Post />
         </Route>
       </Switch>

@@ -40,7 +40,7 @@ export default function PostItem({ post }: PostItemProps) {
   const { title, intro, readTime, created, id } = post;
 
   return (
-    <Link to={`/${id}`} >
+    <Link to={`/post/${id}`} >
       <Main>
         <Title>{title}</Title>
         <SubTitle>

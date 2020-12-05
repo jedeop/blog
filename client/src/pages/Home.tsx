@@ -1,4 +1,4 @@
-import PostList from '@/components/postList'
+import PostList from '@/components/postList/postList'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'

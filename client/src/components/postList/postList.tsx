@@ -1,6 +1,6 @@
 import React from 'react'
 import { PostForList } from '@/types/post'
-import PostItem from '@/components/postItem'
+import PostItem from '@/components/postList/postItem'
 import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components'
 
