@@ -7,8 +7,8 @@ import styled from 'styled-components'
 import Logo from '@/components/logo'
 import GlobalStyle from '@/styles/global'
 
-const Home = loadable(() => import('@/pages/Home'))
-const Post = loadable(() => import('@/pages/Post'))
+const HomePage = loadable(() => import('@/pages/HomePage'))
+const PostPage = loadable(() => import('@/pages/PostPage'))
 
 const Container = styled.div`
   background-color: #F8F8F8;
@@ -47,9 +47,9 @@ const App = () => (
     </Header>
     <main>
       <Switch>
-        <Route exact path="/" render={() => <Home />} />
+        <Route exact path="/" render={() => <HomePage />} />
         <Route path="/post/:postId">
-          <Post />
+          <PostPage />
         </Route>
       </Switch>
     </main>
