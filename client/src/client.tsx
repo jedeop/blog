@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { loadableReady } from '@loadable/component'
-import { ApolloClient, InMemoryCache, ApolloProvider, NormalizedCacheObject } from '@apollo/client'
+import { ApolloClient, ApolloProvider, NormalizedCacheObject } from '@apollo/client'
+import { ApolloCache } from './apollo'
 
 declare global {
   interface Window {
@@ -13,15 +14,16 @@ declare global {
 
 const client = new ApolloClient({
   uri: '/graphql',
-  cache: new InMemoryCache().restore(window.__APOLLO_STATE__)
+  cache: ApolloCache().restore(window.__APOLLO_STATE__),
+  connectToDevTools: true,
 })
 
 loadableReady(() => {
   ReactDOM.hydrate((
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ApolloProvider>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ApolloProvider>
   ), document.getElementById('root'))
 })

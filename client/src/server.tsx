@@ -12,6 +12,7 @@ import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@ap
 import { getDataFromTree } from '@apollo/react-ssr'
 
 import App from './App'
+import { ApolloCache } from './apollo'
 
 const PORT = process.env.port || 3000;
 
@@ -35,7 +36,7 @@ app.use(async ctx => {
       },
       fetch,
     }),
-    cache: new InMemoryCache(),
+    cache: ApolloCache(),
   })
   const context: {
     url?: string
@@ -45,12 +46,12 @@ app.use(async ctx => {
   const sheet = new ServerStyleSheet()
 
   const jsx = webExtractor.collectChunks(
-      <ApolloProvider client={client}>
-        <StaticRouter location={ctx.req.url} context={context}>
-          <App />
-        </StaticRouter>
-      </ApolloProvider>
-    )
+    <ApolloProvider client={client}>
+      <StaticRouter location={ctx.req.url} context={context}>
+        <App />
+      </StaticRouter>
+    </ApolloProvider>
+  )
 
   await getDataFromTree(jsx)
 
