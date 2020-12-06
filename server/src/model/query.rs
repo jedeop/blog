@@ -1,4 +1,5 @@
 use async_graphql::{Context, FieldResult, Object};
+use base64;
 
 use super::{
     post::{Post, PostConnection},
@@ -26,7 +27,16 @@ impl QueryRoot {
     ) -> FieldResult<PostConnection> {
         let db = ctx.data::<Database>()?;
 
-        let post_connection = PostConnection::new(&db, first, after.as_deref()).await?;
+        let first = first.unwrap_or(10);
+        let after = match after {
+            Some(after) => {
+                let decode = base64::decode(after)?;
+                String::from_utf8(decode)?
+            }
+            None => "1000-01-01 00:00:00".to_string(),
+        };
+
+        let post_connection = PostConnection::new(&db, first, &after).await?;
 
         Ok(post_connection)
     }

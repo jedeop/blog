@@ -4,7 +4,10 @@ use sqlx::types::chrono;
 
 use crate::{database::Database, utils};
 
-use super::{pagination::Edge, post_group::PostGroup};
+use super::{
+    pagination::{Edge, PageInfo},
+    post_group::PostGroup,
+};
 
 #[derive(Debug)]
 pub struct Post {
@@ -62,17 +65,14 @@ pub struct PostInput {
 #[derive(SimpleObject)]
 pub struct PostConnection {
     pub edges: Vec<Edge<Post>>,
+    pub page_info: PageInfo,
 }
 
 impl PostConnection {
-    pub async fn new(
-        db: &Database,
-        first: Option<u64>,
-        after: Option<&str>,
-    ) -> Result<PostConnection> {
+    pub async fn new(db: &Database, first: u64, after: &str) -> Result<PostConnection> {
         let posts = db.get_posts(first, after).await?;
 
-        let edges: Vec<Edge<Post>> = posts
+        let mut edges: Vec<Edge<Post>> = posts
             .into_iter()
             .map(|post| {
                 let cursor = base64::encode(post.created.to_string());
@@ -80,6 +80,19 @@ impl PostConnection {
             })
             .collect();
 
-        Ok(PostConnection { edges })
+        let has_next_page = edges.len() > first as usize;
+        if has_next_page {
+            edges.remove(edges.len() - 1);
+        }
+
+        let end_cursor = edges.last().map(|edge| edge.cursor.clone());
+
+        Ok(PostConnection {
+            page_info: PageInfo {
+                has_next_page,
+                end_cursor,
+            },
+            edges,
+        })
     }
 }
