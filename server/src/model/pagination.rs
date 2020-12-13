@@ -1,9 +1,9 @@
-use async_graphql::{OutputValueType, SimpleObject};
+use async_graphql::{OutputType, SimpleObject};
 
 #[derive(SimpleObject)]
 pub struct Edge<Node>
 where
-    Node: Send + Sync + OutputValueType,
+    Node: Send + Sync + OutputType,
 {
     pub node: Node,
     pub cursor: String,
