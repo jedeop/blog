@@ -1,6 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const LoadablePlugin = require('@loadable/webpack-plugin')
+const NodemonPlugin = require('nodemon-webpack-plugin')
 
 
 const getConfig = (mode) => {
@@ -34,7 +35,7 @@ const getConfig = (mode) => {
         '@': path.resolve(__dirname, 'src')
       }
     },
-    plugins: isServer ? [] : [new LoadablePlugin()],
+    plugins: isServer ? [new NodemonPlugin()] : [new LoadablePlugin()],
     externals: isServer ? [nodeExternals()] : [],
   }
 }

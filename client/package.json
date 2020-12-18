@@ -5,9 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "watch": "NODE_ENV=development webpack",
-    "start": "node ./dist/server/main.js",
-    "serve": "nodemon -w ./dist/server ./dist/server/main.js"
+    "dev": "NODE_ENV=development webpack",
+    "start": "node ./dist/server/main.js"
   },
   "dependencies": {
     "@apollo/client": "^3.3.2",
@@ -50,6 +49,7 @@
     "babel-plugin-styled-components": "^1.12.0",
     "cross-env": "^7.0.2",
     "nodemon": "^2.0.6",
+    "nodemon-webpack-plugin": "^4.3.2",
     "ts-loader": "^8.0.11",
     "typescript": "^4.1.2",
     "webpack": "^4.44.2",
