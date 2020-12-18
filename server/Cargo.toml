@@ -1,5 +1,5 @@
 [package]
-name = "jedeop"
+name = "blog"
 version = "0.1.0"
 authors = ["jedeop <cong0116@naver.com>"]
 edition = "2018"
@@ -13,5 +13,4 @@ async-std = { version = "1.8.0", features = ["attributes"] }
 async-graphql = "2.1.8"
 async-graphql-tide = "2.1.8"
 anyhow = "1.0"
-dotenv = "0.15"
 base64 = "0.13.0"

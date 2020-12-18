@@ -14,8 +14,6 @@ import { getDataFromTree } from '@apollo/react-ssr'
 import App from './App'
 import { ApolloCache } from './apollo'
 
-const PORT = process.env.port || 3000;
-
 const app = new Koa()
 
 const webStats = path.resolve(
@@ -83,6 +81,6 @@ app.use(async ctx => {
   ctx.body = html;
 })
 
-app.listen(PORT);
+app.listen(3000);
 
-console.log(`Server Up!\nhttp://localhost:${PORT}/`)
+console.log(`Server Up!`)

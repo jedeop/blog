@@ -14,15 +14,14 @@ use tide::{http::mime, Body, Response, StatusCode};
 
 #[async_std::main]
 async fn main() -> anyhow::Result<()> {
-    dotenv::dotenv()?;
-
     let db = Database::new(&env::var("DATABASE_URL")?).await?;
 
     let schema = Schema::build(QueryRoot, MutationRoot, EmptySubscription)
         .data(db)
         .finish();
-    println!("Playground: http://localhost:8000");
+    println!("Server Up!");
 
+    tide::log::start();
     let mut app = tide::new();
 
     app.at("/graphql")
@@ -38,7 +37,7 @@ async fn main() -> anyhow::Result<()> {
         Ok(res)
     });
 
-    app.listen("localhost:8000").await?;
+    app.listen("0.0.0.0:7878").await?;
 
     Ok(())
 }
