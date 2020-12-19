@@ -19,6 +19,8 @@ services:
     restart: on-failure
     volumes: 
       - ./frontend/:/app
+    environment: 
+      BACKEND_URL: http://backend:7878/graphql
     expose: 
       - 3000
 
