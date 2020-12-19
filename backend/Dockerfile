@@ -17,9 +17,6 @@ FROM rust:1.48 as builder
 
 WORKDIR /app
 
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
-
 COPY . .
 COPY --from=cacher /app/target target
 COPY --from=cacher $CARGO_HOME $CARGO_HOME
@@ -31,9 +28,6 @@ FROM debian:buster-slim as runtime
 RUN apt update \
     && apt install -y libssl-dev \
     && rm -rf /var/lib/apt/lists/*
-
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
 
 COPY --from=builder /app/target/release/blog /usr/local/bin/
 

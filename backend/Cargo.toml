@@ -7,7 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sqlx = { version = "0.4.1", default-features = false, features = [ "runtime-async-std-native-tls", "mysql", "macros", "chrono" ] } 
+sqlx = { version = "0.4.1", default-features = false, features = [ "runtime-async-std-native-tls", "mysql", "macros", "chrono", "offline" ] } 
 tide= "0.15.0"
 async-std = { version = "1.8.0", features = ["attributes"] }
 async-graphql = "2.1.8"

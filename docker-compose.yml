@@ -1,0 +1,45 @@
+version: "3"
+services:
+  db:
+    image: mysql:8
+    container_name: db
+    restart: on-failure
+    env_file: 
+      - ./db.env
+    volumes: 
+      - db-data:/var/lib/mysql
+    expose:
+      - 3306
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile-dev
+    container_name: frontend
+    restart: on-failure
+    volumes: 
+      - ./frontend/:/app
+    expose: 
+      - 3000
+
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: on-failure
+    env_file: 
+      - ./db.env
+    expose:
+      - 7878
+    depends_on:
+      - db
+
+  proxy:
+    build: ./proxy
+    container_name: proxy
+    restart: on-failure
+    ports:
+      - 8080:8080
+        
+volumes: 
+  db-data: {}
+    
