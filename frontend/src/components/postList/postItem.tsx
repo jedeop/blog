@@ -1,10 +1,10 @@
 import React from 'react'
 import { PostForList } from '@/types/post'
 import formatDate from 'date-fns/format'
-import parseDate from 'date-fns/parse'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Clock } from 'react-feather'
+import parseISO from 'date-fns/parseISO'
 
 const Main = styled.div`
   background-color: white;
@@ -39,15 +39,15 @@ interface PostItemProps {
   post: PostForList
 }
 export default function PostItem({ post }: PostItemProps) {
-  const { title, intro, readTime, created, id } = post;
+  const { title, summary, readTime, createdAt, postId } = post;
 
   return (
-    <Link to={`/post/${id}`} >
+    <Link to={`/post/${postId}`} >
       <Main>
         <Title>{title}</Title>
-        <Intro>{intro}</Intro>
+        <Intro>{summary}</Intro>
         <Hr />
-        <Meta><StyledClock size={16} />{readTime}분 | {formatDate(parseDate(created, 'yyyy-MM-dd HH:mm:SS', new Date()), 'yyyy.MM.dd')}</Meta>
+        <Meta><StyledClock size={16} />{readTime}분 | {formatDate(parseISO(createdAt), 'yyyy.MM.dd')}</Meta>
       </Main>
     </Link>
   )

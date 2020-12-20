@@ -10,10 +10,10 @@ query GetPosts ($cursor: String) {
   posts(first: 10, after: $cursor) {
     edges {
       node {
-        id
+        postId
         title
-        intro
-        created
+        summary
+        createdAt
         readTime
       }
       cursor
@@ -82,7 +82,7 @@ export default function PostList() {
   if (error || !data) return <div>에러 발생: {error}</div>
 
   const list: JSX.Element[] = data.posts.edges
-    .map(({ node }) => <PostItem key={node.id} post={node} />)
+    .map(({ node }) => <PostItem key={node.postId} post={node} />)
   return (
     <Container>
       {list}
