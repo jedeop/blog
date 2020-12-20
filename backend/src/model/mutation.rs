@@ -14,13 +14,9 @@ impl MutationRoot {
         Ok(post)
     }
 
-    async fn create_post_group(
-        &self,
-        ctx: &Context<'_>,
-        post_group: SeriesInput,
-    ) -> FieldResult<Series> {
+    async fn create_series(&self, ctx: &Context<'_>, series: SeriesInput) -> FieldResult<Series> {
         let db = ctx.data::<Database>()?;
-        let post_group = db.create_post_group(post_group).await?;
+        let post_group = db.create_series(series).await?;
 
         Ok(post_group)
     }

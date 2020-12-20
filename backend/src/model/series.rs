@@ -1,18 +1,21 @@
 use async_graphql::{Context, FieldResult, InputObject, Object};
 
-use sqlx::types::{Uuid, chrono::{self, Utc}};
+use sqlx::types::{
+    chrono::{self, Utc},
+    Uuid,
+};
 
 use crate::database::Database;
 
 use super::post::Post;
 
-#[derive(Debug)]
+#[derive(Debug, sqlx::FromRow)]
 pub struct Series {
     pub series_id: Uuid,
     pub title: String,
     pub summary: Option<String>,
     pub created_at: chrono::DateTime<Utc>,
-    pub last_update: chrono::DateTime<Utc>,
+    pub last_update: Option<chrono::DateTime<Utc>>,
 }
 
 #[Object]
@@ -29,25 +32,24 @@ impl Series {
     async fn created_at(&self) -> chrono::DateTime<Utc> {
         self.created_at
     }
-    async fn last_update(&self) -> chrono::DateTime<Utc> {
+    async fn last_update(&self) -> Option<chrono::DateTime<Utc>> {
         self.last_update
     }
-    // TODO: article_count, read_time_avg
     async fn article_count(&self, ctx: &Context<'_>) -> FieldResult<i64> {
         let db = ctx.data::<Database>()?;
-        let count = db.get_post_group_count(self.id).await?;
+        let count = db.get_series_count(self.series_id).await?;
 
         Ok(count)
     }
     async fn read_time_avg(&self, ctx: &Context<'_>) -> FieldResult<u64> {
         let db = ctx.data::<Database>()?;
-        let avg = db.get_read_time_avg(self.id).await? as u64;
+        let avg = db.get_read_time_avg(self.series_id).await? as u64;
 
         Ok(avg)
     }
     async fn posts(&self, ctx: &Context<'_>) -> FieldResult<Vec<Post>> {
         let db = ctx.data::<Database>()?;
-        let posts = db.get_posts_by_series(self.id).await?;
+        let posts = db.get_posts_by_series(self.series_id).await?;
 
         Ok(posts)
     }
@@ -56,5 +58,5 @@ impl Series {
 #[derive(InputObject)]
 pub struct SeriesInput {
     pub title: String,
-    pub intro: Option<String>,
+    pub summary: Option<String>,
 }

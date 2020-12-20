@@ -25,8 +25,6 @@ RUN cargo build --release
 
 FROM debian:buster-slim as runtime
 
-ENV DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_USER}
-
 RUN apt-get update \
     && apt-get install -y libssl-dev \
     && rm -rf /var/lib/apt/lists/*

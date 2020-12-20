@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 sqlx = { version = "0.4.1", default-features = false, features = [ "runtime-async-std-native-tls", "postgres", "macros", "chrono", "uuid" ] } 
-tide= "0.15.0"
+tide = "0.15.0"
 async-std = { version = "1.8.0", features = ["attributes"] }
 async-graphql = "2.1.8"
 async-graphql-tide = "2.1.8"

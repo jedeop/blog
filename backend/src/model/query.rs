@@ -1,5 +1,6 @@
 use async_graphql::{Context, FieldResult, Object};
-use base64;
+use chrono::DateTime;
+use sqlx::types::{chrono, Uuid};
 
 use super::{
     post::{Post, PostConnection},
@@ -11,10 +12,10 @@ pub struct QueryRoot;
 
 #[Object]
 impl QueryRoot {
-    async fn post(&self, ctx: &Context<'_>, id: u64) -> FieldResult<Post> {
+    async fn post(&self, ctx: &Context<'_>, post_id: Uuid) -> FieldResult<Post> {
         let db = ctx.data::<Database>()?;
 
-        let post = db.get_post_by_id(id).await?;
+        let post = db.get_post_by_id(post_id).await?;
 
         Ok(post)
     }
@@ -22,7 +23,7 @@ impl QueryRoot {
     async fn posts(
         &self,
         ctx: &Context<'_>,
-        first: Option<u64>,
+        first: Option<u32>,
         after: Option<String>,
     ) -> FieldResult<PostConnection> {
         let db = ctx.data::<Database>()?;
@@ -33,19 +34,20 @@ impl QueryRoot {
                 let decode = base64::decode(after)?;
                 String::from_utf8(decode)?
             }
-            None => "1000-01-01 00:00:00".to_string(),
+            None => String::from("1970-01-01T00:00:00+00:00"),
         };
+        let after = DateTime::parse_from_rfc3339(&after)?;
 
-        let post_connection = PostConnection::new(&db, first, &after).await?;
+        let post_connection = PostConnection::new(&db, first, after).await?;
 
         Ok(post_connection)
     }
 
-    async fn post_group(&self, ctx: &Context<'_>, id: u64) -> FieldResult<Series> {
+    async fn series(&self, ctx: &Context<'_>, series_id: Uuid) -> FieldResult<Series> {
         let db = ctx.data::<Database>()?;
 
-        let post_group = db.get_post_group_by_id(id).await?;
+        let series = db.get_series_by_id(series_id).await?;
 
-        Ok(post_group)
+        Ok(series)
     }
 }

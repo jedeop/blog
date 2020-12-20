@@ -1,5 +1,6 @@
 use anyhow::Result;
 use async_graphql::{Context, FieldResult, InputObject, Object, SimpleObject};
+use chrono::FixedOffset;
 use sqlx::types::chrono::{self, Utc};
 use sqlx::types::Uuid;
 
@@ -30,7 +31,7 @@ impl Post {
     async fn title(&self) -> &str {
         &self.title
     }
-    async fn intro(&self) -> Option<&str> {
+    async fn summary(&self) -> Option<&str> {
         self.summary.as_deref()
     }
     async fn contents(&self) -> &str {
@@ -49,7 +50,7 @@ impl Post {
     async fn series(&self, ctx: &Context<'_>) -> FieldResult<Option<Series>> {
         let db = ctx.data::<Database>()?;
         let post_group = match self.series_id {
-            Some(id) => db.get_post_group_by_id(id).await?,
+            Some(series_id) => db.get_series_by_id(series_id).await?,
             None => return Ok(None),
         };
 
@@ -72,13 +73,17 @@ pub struct PostConnection {
 }
 
 impl PostConnection {
-    pub async fn new(db: &Database, first: u64, after: &str) -> Result<PostConnection> {
+    pub async fn new(
+        db: &Database,
+        first: u32,
+        after: chrono::DateTime<FixedOffset>,
+    ) -> Result<PostConnection> {
         let posts = db.get_posts(first, after).await?;
 
         let mut edges: Vec<Edge<Post>> = posts
             .into_iter()
             .map(|post| {
-                let cursor = base64::encode(post.created.to_string());
+                let cursor = base64::encode(post.created_at.to_rfc3339());
                 Edge::<Post> { node: post, cursor }
             })
             .collect();
