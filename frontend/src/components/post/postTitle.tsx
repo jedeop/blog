@@ -1,6 +1,6 @@
 import React from 'react'
 import formatDate from 'date-fns/format'
-import parseDate from 'date-fns/parse'
+import parseISO from 'date-fns/parseISO'
 import styled from 'styled-components'
 import { Clock } from 'react-feather'
 
@@ -28,16 +28,16 @@ const Hr = styled.div`
 
 interface TitleProp {
   title: string,
-  created: string,
+  createdAt: string,
   readTime: number,
 }
 
-const PostTitle = ({ title, created, readTime }: TitleProp) => {
+const PostTitle = ({ title, createdAt, readTime }: TitleProp) => {
   return (
     <div>
       <Title>{title}</Title>
       <Meta>
-        <div>{formatDate(parseDate(created, 'yyyy-MM-dd HH:mm:SS', new Date()), 'yyyy.MM.dd HH:mm')}</div>
+        <div>{formatDate(parseISO(createdAt), 'yyyy.MM.dd HH:mm')}</div>
         <ReadTime><StyledClock size={16} />{readTime}분</ReadTime>
       </Meta>
       <Hr />

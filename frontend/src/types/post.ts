@@ -1,17 +1,17 @@
 export interface PostForList {
-  id: number,
+  postId: string,
   title: string,
-  intro?: string,
-  created: string,
+  summary?: string,
+  createdAt: string,
   readTime: number,
 }
 
 export interface Post {
-  id: number,
+  postId: string,
   title: string,
-  intro?: string,
+  summary?: string,
   contents: string,
-  created: string,
-  edited?: string,
+  createdAt: string,
+  lastUpdate?: string,
   readTime: number,
 }
