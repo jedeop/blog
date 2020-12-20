@@ -1,36 +1,36 @@
 use async_graphql::{Context, FieldResult, InputObject, Object};
 
-use sqlx::types::chrono;
+use sqlx::types::{Uuid, chrono::{self, Utc}};
 
 use crate::database::Database;
 
 use super::post::Post;
 
 #[derive(Debug)]
-pub struct PostGroup {
-    pub id: u64,
+pub struct Series {
+    pub series_id: Uuid,
     pub title: String,
-    pub intro: Option<String>,
-    pub created: chrono::NaiveDateTime,
-    pub updated: chrono::NaiveDateTime,
+    pub summary: Option<String>,
+    pub created_at: chrono::DateTime<Utc>,
+    pub last_update: chrono::DateTime<Utc>,
 }
 
 #[Object]
-impl PostGroup {
-    async fn id(&self) -> u64 {
-        self.id
+impl Series {
+    async fn series_id(&self) -> Uuid {
+        self.series_id
     }
     async fn title(&self) -> &str {
         &self.title
     }
-    async fn intro(&self) -> Option<&str> {
-        self.intro.as_deref()
+    async fn summary(&self) -> Option<&str> {
+        self.summary.as_deref()
     }
-    async fn created(&self) -> chrono::NaiveDateTime {
-        self.created
+    async fn created_at(&self) -> chrono::DateTime<Utc> {
+        self.created_at
     }
-    async fn updated(&self) -> chrono::NaiveDateTime {
-        self.updated
+    async fn last_update(&self) -> chrono::DateTime<Utc> {
+        self.last_update
     }
     // TODO: article_count, read_time_avg
     async fn article_count(&self, ctx: &Context<'_>) -> FieldResult<i64> {
@@ -47,14 +47,14 @@ impl PostGroup {
     }
     async fn posts(&self, ctx: &Context<'_>) -> FieldResult<Vec<Post>> {
         let db = ctx.data::<Database>()?;
-        let posts = db.get_posts_by_group(self.id).await?;
+        let posts = db.get_posts_by_series(self.id).await?;
 
         Ok(posts)
     }
 }
 
 #[derive(InputObject)]
-pub struct PostGroupInput {
+pub struct SeriesInput {
     pub title: String,
     pub intro: Option<String>,
 }

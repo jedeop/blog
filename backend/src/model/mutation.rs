@@ -1,6 +1,6 @@
 use async_graphql::{Context, FieldResult, Object};
 
-use super::{post::Post, post::PostInput, post_group::PostGroup, post_group::PostGroupInput};
+use super::{post::Post, post::PostInput, series::Series, series::SeriesInput};
 use crate::Database;
 
 pub struct MutationRoot;
@@ -17,8 +17,8 @@ impl MutationRoot {
     async fn create_post_group(
         &self,
         ctx: &Context<'_>,
-        post_group: PostGroupInput,
-    ) -> FieldResult<PostGroup> {
+        post_group: SeriesInput,
+    ) -> FieldResult<Series> {
         let db = ctx.data::<Database>()?;
         let post_group = db.create_post_group(post_group).await?;
 

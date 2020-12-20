@@ -1,51 +1,54 @@
 use anyhow::Result;
 use async_graphql::{Context, FieldResult, InputObject, Object, SimpleObject};
-use sqlx::types::chrono;
+use sqlx::types::chrono::{self, Utc};
+use sqlx::types::Uuid;
 
 use crate::{database::Database, utils};
 
 use super::{
     pagination::{Edge, PageInfo},
-    post_group::PostGroup,
+    series::Series,
 };
 
-#[derive(Debug)]
+#[derive(Debug, sqlx::FromRow)]
 pub struct Post {
-    pub id: u64,
+    pub post_id: Uuid,
     pub title: String,
-    pub intro: Option<String>,
+    pub summary: Option<String>,
     pub contents: String,
-    pub created: chrono::NaiveDateTime,
-    pub edited: Option<chrono::NaiveDateTime>,
-    pub group_id: Option<u64>,
+    pub created_at: chrono::DateTime<Utc>,
+    pub last_update: Option<chrono::DateTime<Utc>>,
+    pub tags: Option<Vec<Uuid>>,
+    pub series_id: Option<Uuid>,
 }
 
 #[Object]
 impl Post {
-    async fn id(&self) -> u64 {
-        self.id
+    async fn post_id(&self) -> Uuid {
+        self.post_id
     }
     async fn title(&self) -> &str {
         &self.title
     }
     async fn intro(&self) -> Option<&str> {
-        self.intro.as_deref()
+        self.summary.as_deref()
     }
     async fn contents(&self) -> &str {
         &self.contents
     }
-    async fn created(&self) -> chrono::NaiveDateTime {
-        self.created
+    async fn created_at(&self) -> chrono::DateTime<Utc> {
+        self.created_at
     }
-    async fn edited(&self) -> Option<chrono::NaiveDateTime> {
-        self.edited
+    async fn last_update(&self) -> Option<chrono::DateTime<Utc>> {
+        self.last_update
     }
     async fn read_time(&self) -> u64 {
         utils::get_read_time(&self.contents) as u64
     }
-    async fn group(&self, ctx: &Context<'_>) -> FieldResult<Option<PostGroup>> {
+    // TOOD: tags
+    async fn series(&self, ctx: &Context<'_>) -> FieldResult<Option<Series>> {
         let db = ctx.data::<Database>()?;
-        let post_group = match self.group_id {
+        let post_group = match self.series_id {
             Some(id) => db.get_post_group_by_id(id).await?,
             None => return Ok(None),
         };
@@ -57,9 +60,9 @@ impl Post {
 #[derive(InputObject)]
 pub struct PostInput {
     pub title: String,
-    pub intro: Option<String>,
+    pub summary: Option<String>,
     pub contents: String,
-    pub group_id: Option<u64>,
+    pub series_id: Option<Uuid>,
 }
 
 #[derive(SimpleObject)]

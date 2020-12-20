@@ -3,7 +3,7 @@ use base64;
 
 use super::{
     post::{Post, PostConnection},
-    post_group::PostGroup,
+    series::Series,
 };
 use crate::Database;
 
@@ -41,7 +41,7 @@ impl QueryRoot {
         Ok(post_connection)
     }
 
-    async fn post_group(&self, ctx: &Context<'_>, id: u64) -> FieldResult<PostGroup> {
+    async fn post_group(&self, ctx: &Context<'_>, id: u64) -> FieldResult<Series> {
         let db = ctx.data::<Database>()?;
 
         let post_group = db.get_post_group_by_id(id).await?;
