@@ -43,7 +43,7 @@ interface GetPostsVar {
 
 const Container = styled.div`
   ${BaseContainer}
-  padding-bottom: 30px;
+  padding: 0px 10px;
 `
 
 export default function PostList() {

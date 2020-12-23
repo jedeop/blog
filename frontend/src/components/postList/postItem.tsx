@@ -7,8 +7,7 @@ import { Link } from 'react-router-dom'
 import { Clock, Calendar } from 'react-feather'
 
 const Main = styled.div`
-  padding: 15px;
-  margin: 30px 0px;
+  margin: 60px 0px;
   line-height: 1.2;
 `
 const Title = styled.div`
