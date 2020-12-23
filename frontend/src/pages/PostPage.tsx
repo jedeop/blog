@@ -35,7 +35,7 @@ interface GetPostVariable {
 const Container = styled.div`
   ${BaseContainer}
   background-color: white;
-  padding: 20px;
+  padding: 10px;
 `
 
 const Post = () => {
@@ -53,7 +53,6 @@ const Post = () => {
         <PostTitle title={post.title} createdAt={post.createdAt} readTime={post.readTime} />
         <PostContents contents={post.contents} />
       </Container>
-      <Link to="/">글 목록으로 돌아가기</Link>
     </div>
   )
 }

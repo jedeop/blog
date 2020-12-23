@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { Clock, Calendar } from 'react-feather'
 
 const Main = styled.div`
-  margin: 60px 0px;
+  margin-bottom: 60px;
   line-height: 1.2;
 `
 const Title = styled.div`
@@ -55,8 +55,8 @@ export default function PostItem({ post }: PostItemProps) {
   const { title, summary, readTime, createdAt, postId } = post;
 
   return (
-    <Link to={`/post/${postId}`} >
-      <Main>
+    <Main>
+      <Link to={`/post/${postId}`} >
         <Title>{title}</Title>
         <Hr />
         <Summary>{summary}</Summary>
@@ -70,7 +70,7 @@ export default function PostItem({ post }: PostItemProps) {
             <StyledClock size={16} />{readTime}분
           </RightSide>
         </Meta>
-      </Main>
-    </Link>
+      </Link>
+    </Main>
   )
 }
