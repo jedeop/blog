@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-family: 'IBM Plex Sans KR';
+    font-family: 'IBM Plex Sans KR', sans-serif;
   }
 
   a {

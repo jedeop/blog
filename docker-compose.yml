@@ -3,11 +3,11 @@ services:
   frontend:
     build: 
       context: ./frontend
-      dockerfile: Dockerfile-dev
+      dockerfile: dev.Dockerfile
     container_name: frontend
     restart: on-failure
     volumes: 
-      - ./frontend/:/app
+      - ./frontend/src/:/app/src/
     environment: 
       BACKEND_URL: http://backend:7878/graphql
     expose: 

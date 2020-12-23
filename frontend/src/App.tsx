@@ -37,6 +37,7 @@ const App = () => (
     <Helmet>
       <title>제덮 블로그</title>
       <link rel="icon" href="/favicon.ico" />
+      <link rel="stylesheet" href="/dist/fonts/css/ibm-plex-sans-kr.min.css"/>
     </Helmet>
     <Header>
       <FlexLink to="/">
