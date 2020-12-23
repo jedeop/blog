@@ -11,7 +11,6 @@ const HomePage = loadable(() => import('@/pages/HomePage'))
 const PostPage = loadable(() => import('@/pages/PostPage'))
 
 const Container = styled.div`
-  background-color: #F8F8F8;
   min-height: 100vh;
 `
 

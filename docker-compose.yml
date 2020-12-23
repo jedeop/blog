@@ -19,11 +19,12 @@ services:
     restart: on-failure
     env_file: 
       - ./db.env
-    
     expose:
       - 7878
     depends_on:
       - db
+    ports: 
+      - 7878:7878 # for development
 
   proxy:
     build: ./proxy
