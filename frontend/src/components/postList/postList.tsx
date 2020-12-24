@@ -15,6 +15,9 @@ query GetPosts ($cursor: String) {
         summary
         createdAt
         readTime
+        tags {
+          name
+        }
       }
       cursor
     }

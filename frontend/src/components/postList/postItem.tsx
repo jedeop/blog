@@ -5,6 +5,7 @@ import koLocale from 'date-fns/locale/ko'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Clock, Calendar } from 'react-feather'
+import Tags from './tags'
 
 const Main = styled.div`
   margin-bottom: 60px;
@@ -35,9 +36,6 @@ const RightSide = styled.div`
   align-items: center;
   margin-left: auto;
 `
-const Tag = styled.div`
-  margin-right: 5px;
-`
 const styledIcon = css`
   margin: 0px 3px;
 `
@@ -52,7 +50,7 @@ interface PostItemProps {
   post: PostForList
 }
 export default function PostItem({ post }: PostItemProps) {
-  const { title, summary, readTime, createdAt, postId } = post;
+  const { title, summary, readTime, createdAt, tags, postId } = post;
 
   return (
     <Main>
@@ -61,9 +59,7 @@ export default function PostItem({ post }: PostItemProps) {
         <Hr />
         <Summary>{summary}</Summary>
         <Meta>
-            <Tag>#Rust</Tag>
-            <Tag>#에러 처리</Tag>
-            <Tag>#프로그래밍</Tag>
+          <Tags tags={tags?.map(tag => tag.name) || []} />
           <RightSide>
             <StyledCalendar size={16} />
             {formatDistanceToNow(parseISO(createdAt), { locale: koLocale })} 전 ⋮ 

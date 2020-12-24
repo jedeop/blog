@@ -4,6 +4,9 @@ export interface PostForList {
   summary?: string,
   createdAt: string,
   readTime: number,
+  tags?: [{
+    name: string,
+  }]
 }
 
 export interface Post {
