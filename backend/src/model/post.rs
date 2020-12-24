@@ -6,10 +6,7 @@ use sqlx::types::Uuid;
 
 use crate::{database::Database, utils};
 
-use super::{
-    pagination::{Edge, PageInfo},
-    series::Series,
-};
+use super::{pagination::{Edge, PageInfo}, series::Series, tag::Tag};
 
 #[derive(Debug, sqlx::FromRow)]
 pub struct Post {
@@ -46,7 +43,15 @@ impl Post {
     async fn read_time(&self) -> u64 {
         utils::get_read_time(&self.contents) as u64
     }
-    // TOOD: tags
+    async fn tags(&self, ctx: &Context<'_>) -> FieldResult<Option<Vec<Tag>>> {
+        let db = ctx.data::<Database>()?;
+        let tags = match &self.tags {
+            Some(tags) => Some(db.get_tags(tags).await?),
+            None => None,
+        };
+
+        Ok(tags)
+    }
     async fn series(&self, ctx: &Context<'_>) -> FieldResult<Option<Series>> {
         let db = ctx.data::<Database>()?;
         let post_group = match self.series_id {
@@ -63,6 +68,7 @@ pub struct PostInput {
     pub title: String,
     pub summary: Option<String>,
     pub contents: String,
+    pub tags: Option<Vec<String>>,
     pub series_id: Option<Uuid>,
 }
 

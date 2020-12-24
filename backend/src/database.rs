@@ -5,10 +5,7 @@ use sqlx::{
     PgPool, Row,
 };
 
-use crate::model::{
-    post::{Post, PostInput},
-    series::{Series, SeriesInput},
-};
+use crate::model::{post::{Post, PostInput}, series::{Series, SeriesInput}, tag::Tag};
 use crate::utils;
 
 pub struct Database {
@@ -58,15 +55,20 @@ impl Database {
         Ok(posts)
     }
     pub async fn create_post(&self, post: PostInput) -> Result<Post> {
+        let tag_ids: Option<Vec<Uuid>> = match &post.tags {
+            Some(tags) => Some(self.create_tags(tags).await?.into_iter().map(|tag| tag.tag_id).collect()),
+            None => None,
+        };
         let new_post: Post = sqlx::query_as::<_, Post>(
             "INSERT INTO
-            post (title, summary, contents, series_id)
-            VALUES ($1, $2, $3, $4)
+            post (title, summary, contents, tags, series_id)
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *",
         )
         .bind(post.title)
         .bind(post.summary)
         .bind(post.contents)
+        .bind(tag_ids)
         .bind(post.series_id)
         .fetch_one(&self.pool)
         .await?;
@@ -132,5 +134,33 @@ impl Database {
         .await?;
 
         Ok(new_series)
+    }
+}
+
+impl Database {
+    pub async fn get_tags(&self, tag_ids: &Vec<Uuid>) -> Result<Vec<Tag>> {
+        let tags: Vec<Tag> = sqlx::query_as::<_, Tag>(
+            "SELECT tag_id, name
+            FROM tag
+            WHERE tag_id IN (SELECT * FROM UNNEST($1))"
+        )
+        .bind(tag_ids)
+        .fetch_all(&self.pool)
+        .await?;
+
+        Ok(tags)
+    }
+    pub async fn create_tags(&self, tags: &Vec<String>) -> Result<Vec<Tag>> {
+        let tags: Vec<Tag> = sqlx::query_as::<_, Tag>(
+            "INSERT INTO tag (name)
+            SELECT * FROM UNNEST($1)
+            ON CONFLICT (name) DO UPDATE SET name=EXCLUDED.name
+            RETURNING *;"
+        )
+        .bind(tags)
+        .fetch_all(&self.pool)
+        .await?;
+        
+        Ok(tags)
     }
 }

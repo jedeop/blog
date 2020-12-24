@@ -24,7 +24,7 @@ EXECUTE PROCEDURE trigger_update_timestamp();
 
 CREATE TABLE IF NOT EXISTS tag (
   tag_id UUID DEFAULT uuid_generate_v4(),
-  name VARCHAR(25) NOT NULL,
+  name VARCHAR(25) NOT NULL UNIQUE,
   PRIMARY KEY(tag_id)
 );
 
