@@ -5,6 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { github } from 'react-syntax-highlighter/dist/cjs/styles/hljs'
 import gfm from 'remark-gfm'
 import InPostLink from './inPostLink'
+import Heading, { slugger } from './heading'
 
 const renderers = {
   code: ({language, value}) => {
@@ -12,6 +13,9 @@ const renderers = {
   },
   link: ({href, children}) => {
     return <InPostLink href={href} children={children} />
+  },
+  heading: ({level, children}) => {
+    return <Heading level={level} children={children} />
   }
 }
 
@@ -23,6 +27,7 @@ const Body = styled.div`
 `
 
 const PostContents = ({ contents }: PostContentsProp) => {
+  slugger.reset()
   return (
     <Body>
       <ReactMarkdown plugins={[gfm]} renderers={renderers} children={contents} />
