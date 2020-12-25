@@ -1,12 +1,12 @@
+import { Tag } from "./tag";
+
 export interface PostForList {
   postId: string,
   title: string,
   summary?: string,
   createdAt: string,
   readTime: number,
-  tags?: [{
-    name: string,
-  }]
+  tags?: Tag[],
 }
 
 export interface Post {

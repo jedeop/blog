@@ -59,7 +59,7 @@ export default function PostItem({ post }: PostItemProps) {
         <Hr />
         <Summary>{summary}</Summary>
         <Meta>
-          <Tags tags={tags?.map(tag => tag.name) || []} />
+          <Tags tags={tags || []} />
           <RightSide>
             <StyledCalendar size={16} />
             {formatDistanceToNow(parseISO(createdAt), { locale: koLocale })} 전 ⋮ 
