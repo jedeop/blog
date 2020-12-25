@@ -6,6 +6,7 @@ import { Post } from '@/types/post'
 import PostContents from '@/components/post/postContents'
 import styled from 'styled-components'
 import BaseContainer from '@/styles/container'
+import Loading from '@/components/loading'
 
 interface Params {
   postId: string,
@@ -42,7 +43,7 @@ const Post = () => {
   const { postId } = useParams<Params>()
   const { loading, error, data } = useQuery<GetPostData, GetPostVariable>(GET_POST, { variables: { id: postId } })
   
-  if (loading) return <div>로딩 중</div>
+  if (loading) return <Loading />
   if (error || !data) return <div>에러 발생: {error}</div>
     
   const post = data.post

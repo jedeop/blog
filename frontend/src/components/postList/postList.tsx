@@ -4,6 +4,7 @@ import PostItem from '@/components/postList/postItem'
 import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components'
 import BaseContainer from '@/styles/container'
+import Loading from '../loading'
 
 const GET_POSTS = gql`
 query GetPosts ($cursor: String) {
@@ -81,7 +82,7 @@ export default function PostList() {
     }
   })
 
-  if (loading) return <div>로딩 중</div>
+  if (loading) return <Loading />
   if (error || !data) return <div>에러 발생: {error}</div>
 
   const list: JSX.Element[] = data.posts.edges

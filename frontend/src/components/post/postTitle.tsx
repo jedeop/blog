@@ -7,6 +7,8 @@ import { Clock } from 'react-feather'
 const Title = styled.div`
   font-size: 35px;
   font-weight: bold;
+  line-height: 1.2;
+  margin: 5px 0px;
 `
 const Meta = styled.div`
   display: flex;
