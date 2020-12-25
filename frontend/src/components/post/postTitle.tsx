@@ -36,14 +36,14 @@ interface TitleProp {
 
 const PostTitle = ({ title, createdAt, readTime }: TitleProp) => {
   return (
-    <div>
+    <header>
       <Title>{title}</Title>
       <Meta>
         <div>{formatDate(parseISO(createdAt), 'yyyy.MM.dd HH:mm')}</div>
         <ReadTime><StyledClock size={16} />{readTime}분</ReadTime>
       </Meta>
       <Hr />
-    </div>
+    </header>
   )
 }
 

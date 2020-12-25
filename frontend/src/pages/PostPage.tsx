@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { gql, useQuery } from '@apollo/client'
 import PostTitle from '@/components/post/postTitle'
 import { Post } from '@/types/post'
@@ -33,7 +33,7 @@ interface GetPostVariable {
 }  
 
 
-const Container = styled.div`
+const Container = styled.article`
   ${BaseContainer}
   background-color: white;
   padding: 10px;
