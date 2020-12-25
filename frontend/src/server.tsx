@@ -14,6 +14,7 @@ import { getDataFromTree } from '@apollo/react-ssr'
 
 import App from './App'
 import { ApolloCache } from './apollo'
+import ScrollToTop from './components/scrollToTop'
 
 const app = new Koa()
 
@@ -48,6 +49,7 @@ app.use(async ctx => {
   const jsx = webExtractor.collectChunks(
     <ApolloProvider client={client}>
       <StaticRouter location={ctx.req.url} context={context}>
+        <ScrollToTop />
         <App />
       </StaticRouter>
     </ApolloProvider>

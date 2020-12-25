@@ -5,6 +5,7 @@ import App from './App'
 import { loadableReady } from '@loadable/component'
 import { ApolloClient, ApolloProvider, NormalizedCacheObject } from '@apollo/client'
 import { ApolloCache } from './apollo'
+import ScrollToTop from './components/scrollToTop'
 
 declare global {
   interface Window {
@@ -22,6 +23,7 @@ loadableReady(() => {
   ReactDOM.hydrate((
     <ApolloProvider client={client}>
       <BrowserRouter>
+        <ScrollToTop />
         <App />
       </BrowserRouter>
     </ApolloProvider>
