@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use anyhow::Result;
 use async_graphql::{Context, FieldResult, InputObject, Object, SimpleObject};
 use chrono::FixedOffset;
@@ -44,7 +46,7 @@ impl Post {
         utils::get_read_time(&self.contents) as u64
     }
     async fn tags(&self, ctx: &Context<'_>) -> FieldResult<Option<Vec<Tag>>> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
         let tags = match &self.tags {
             Some(tags) => Some(db.get_tags(tags).await?),
             None => None,
@@ -53,7 +55,7 @@ impl Post {
         Ok(tags)
     }
     async fn series(&self, ctx: &Context<'_>) -> FieldResult<Option<Series>> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
         let post_group = match self.series_id {
             Some(series_id) => db.get_series_by_id(series_id).await?,
             None => return Ok(None),

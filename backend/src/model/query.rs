@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use async_graphql::{Context, FieldResult, Object};
 use chrono::DateTime;
 use sqlx::types::{chrono, Uuid};
@@ -13,7 +15,7 @@ pub struct QueryRoot;
 #[Object]
 impl QueryRoot {
     async fn post(&self, ctx: &Context<'_>, post_id: Uuid) -> FieldResult<Post> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
 
         let post = db.get_post_by_id(post_id).await?;
 
@@ -26,7 +28,7 @@ impl QueryRoot {
         first: Option<u32>,
         after: Option<String>,
     ) -> FieldResult<PostConnection> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
 
         let first = first.unwrap_or(10);
         let after = match after {
@@ -44,7 +46,7 @@ impl QueryRoot {
     }
 
     async fn series(&self, ctx: &Context<'_>, series_id: Uuid) -> FieldResult<Series> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
 
         let series = db.get_series_by_id(series_id).await?;
 

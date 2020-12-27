@@ -1,0 +1,45 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg" width="1280" height="550" viewBox="0 0 338.667 145.521">
+  <path d="M16.86 145.52L293.423 0h45.244v145.52z" fill="#4ac3ae"/>
+  <path d="M49.423 145.52L338.667 32.148V145.52z" fill="#61cdb7"/>
+  <!-- title -->
+  <text style="line-height:1.25" x="9.905" y="22.367" font-weight="400" font-size="15.875" font-family="sans-serif" stroke-width=".265">
+    {% for line in title %}
+      <tspan x="9.905" y="{{ 22 + 20 * loop.index0 }}.367" style="-inkscape-font-specification:'IBM Plex Sans KR Bold'" font-weight="700" font-family="IBM Plex Sans KR">{{ line }}</tspan>
+    {% endfor %}
+  </text>
+  <!-- summary -->
+  <text y="58.128" x="9.333" style="line-height:1.25" font-weight="400" font-size="12.347" font-family="sans-serif" stroke-width=".265">
+    {% for line in summary %}
+      <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="{{ 58 + 16 * loop.index0 }}.128" x="9.333" font-weight="300" font-family="IBM Plex Sans KR">{{ line }}</tspan>
+    {% endfor %}
+  </text>
+  <!-- tag -->
+  <text style="line-height:1.25" x="9.302" y="108.679" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265">
+    <tspan x="9.302" y="108.679" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">
+      {% for tag in tags %} 
+        #{{ tag }} 
+      {% endfor %}
+    </tspan>
+  </text>
+  <g transform="matrix(.5 0 0 .5 9 113.8)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+    <path d="M16 2v4M8 2v4M3 10h18"/>
+  </g>
+  <g transform="matrix(.5 0 0 .5 86.333 114.3)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 6v6l4 2"/>
+  </g>
+  <!-- date -->
+  <text style="line-height:1.25" x="224.228" y="97.514" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -200.624 26.3)">
+    <tspan x="224.228" y="97.514" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">{{ date }}</tspan>
+  </text>
+  <!-- read time -->
+  <text y="97.937" x="300.891" style="line-height:1.25" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -200.624 26.3)">
+    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="97.937" x="300.891" font-weight="300" font-family="IBM Plex Sans KR">{{ read_time }}분</tspan>
+  </text>
+  <path d="M264.395 119.003v4.29h5.801l-7.16 12.405h6.296l4.722-8.209 1.728-3.734 1.45 3.086 4.475 8.857h47.182v-4.354h-3.32l.563-6.546h-4.918l-.563 6.546h-5.106l.564-6.546h-4.918l-.564 6.546h-19.58v-8.019h37.842v-4.322h-42.916zm16.201 4.29h5.377v10.292z" fill="#fff"/>
+  <text y="139.948" x="9.682" style="line-height:1.25" font-weight="400" font-size="5.997" font-family="sans-serif" stroke-width=".265">
+    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="139.948" x="9.682" font-weight="300" font-family="IBM Plex Sans KR">© Font: IBM Plex Sans KR, Icon: feather by @colebemis</tspan>
+  </text>
+</svg>

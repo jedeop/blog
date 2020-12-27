@@ -26,7 +26,15 @@ RUN cargo build --release
 FROM debian:buster-slim as runtime
 
 RUN apt-get update \
-    && apt-get install -y libssl-dev \
+    && apt-get install -y libssl-dev wget unzip fontconfig
+    
+RUN wget https://github.com/IBM/plex/releases/download/v5.1.3/OpenType.zip -O plex.zip \
+    && unzip plex.zip \
+    && mv OpenType /usr/share/fonts/opentype/ \
+    && rm plex.zip \
+    && fc-cache -f -v
+    
+RUN apt-get remove -y wget unzip \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/target/release/blog /usr/local/bin/

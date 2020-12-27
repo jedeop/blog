@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use async_graphql::{Context, FieldResult, InputObject, Object};
 
 use sqlx::types::{
@@ -36,19 +38,19 @@ impl Series {
         self.last_update
     }
     async fn article_count(&self, ctx: &Context<'_>) -> FieldResult<i64> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
         let count = db.get_series_count(self.series_id).await?;
 
         Ok(count)
     }
     async fn read_time_avg(&self, ctx: &Context<'_>) -> FieldResult<u64> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
         let avg = db.get_read_time_avg(self.series_id).await? as u64;
 
         Ok(avg)
     }
     async fn posts(&self, ctx: &Context<'_>) -> FieldResult<Vec<Post>> {
-        let db = ctx.data::<Database>()?;
+        let db = ctx.data::<Arc<Database>>()?;
         let posts = db.get_posts_by_series(self.series_id).await?;
 
         Ok(posts)
