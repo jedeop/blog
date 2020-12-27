@@ -31,13 +31,13 @@ async fn main() -> anyhow::Result<()> {
     tide::log::start();
     let mut app = tide::with_state(Context { db: Arc::clone(&db) });
 
-    app.at("/graphql")
+    app.at("/api/graphql")
         .post(async_graphql_tide::endpoint(schema));
 
     app.at("/").get(|_| async move {
         let mut res = Response::new(StatusCode::Ok);
         res.set_body(Body::from_string(playground_source(
-            GraphQLPlaygroundConfig::new("/graphql"),
+            GraphQLPlaygroundConfig::new("/api/graphql"),
         )));
         res.set_content_type(mime::HTML);
 

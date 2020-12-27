@@ -14,7 +14,7 @@ declare global {
 }
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  uri: '/api/graphql',
   cache: ApolloCache().restore(window.__APOLLO_STATE__),
   connectToDevTools: true,
 })

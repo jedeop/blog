@@ -7,6 +7,7 @@ import PostContents from '@/components/post/postContents'
 import styled from 'styled-components'
 import BaseContainer from '@/styles/container'
 import Loading from '@/components/loading'
+import { Helmet } from 'react-helmet'
 
 interface Params {
   postId: string,
@@ -50,6 +51,12 @@ const Post = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta property="og:title" content={`${post.title} - 제덮 블로그`} />
+        <meta property="og:description" content={post.summary} />
+        <meta property="og:image" content={`/api/thumb/${post.postId}`} />
+      </Helmet>
+      <img src={`/api/thumb/${post.postId}`} style={{display: 'none'}} />
       <Container>
         <PostTitle title={post.title} createdAt={post.createdAt} readTime={post.readTime} />
         <PostContents contents={post.contents} />

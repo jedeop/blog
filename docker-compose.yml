@@ -9,7 +9,7 @@ services:
     volumes: 
       - ./frontend/src/:/app/src/
     environment: 
-      BACKEND_URL: http://backend:7878/graphql
+      BACKEND_URL: http://backend:7878/api/graphql
     expose: 
       - 3000
 
