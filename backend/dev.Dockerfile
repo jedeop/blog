@@ -11,7 +11,7 @@ WORKDIR /app
 
 RUN cargo install cargo-chef
 COPY --from=planner /app/recipe.json recipe.json
-RUN cargo chef cook --release --recipe-path recipe.json
+RUN cargo chef cook --recipe-path recipe.json
 
 FROM rust:1.48 as builder
 
@@ -21,7 +21,7 @@ COPY . .
 COPY --from=cacher /app/target target
 COPY --from=cacher $CARGO_HOME $CARGO_HOME
 
-RUN cargo build --release
+RUN cargo build
 
 FROM debian:buster-slim as runtime
 
@@ -37,7 +37,7 @@ RUN wget https://github.com/IBM/plex/releases/download/v5.1.3/OpenType.zip -O pl
 RUN apt-get remove -y wget unzip \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /app/target/release/blog /usr/local/bin/
+COPY --from=builder /app/target/debug/blog /usr/local/bin/
 
 EXPOSE 7878
 ENTRYPOINT ["blog"]

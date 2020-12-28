@@ -12,7 +12,9 @@ services:
       - 3000
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: backend
     restart: always
     env_file: 
