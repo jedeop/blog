@@ -8,7 +8,11 @@ use sqlx::types::Uuid;
 
 use crate::{database::Database, utils};
 
-use super::{pagination::{Edge, PageInfo}, series::Series, tag::Tag};
+use super::{
+    pagination::{Edge, PageInfo},
+    series::Series,
+    tag::Tag,
+};
 
 #[derive(Debug, sqlx::FromRow)]
 pub struct Post {

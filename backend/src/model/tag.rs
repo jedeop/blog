@@ -1,5 +1,5 @@
-use sqlx::types::Uuid;
 use async_graphql::SimpleObject;
+use sqlx::types::Uuid;
 
 #[derive(SimpleObject, sqlx::FromRow)]
 pub struct Tag {
