@@ -9,11 +9,10 @@ interface HeadingProps {
 }
 
 export default function Heading({ level, children }: HeadingProps) {
-  console.log(children)
   return React.createElement(
     `h${level}`,
     {
-      id: slugger.slug(children[0].props.children),
+      id: children.length > 0 ? slugger.slug(children[0].props.children) : undefined,
     },
     children
   )

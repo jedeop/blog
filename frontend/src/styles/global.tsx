@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: 'IBM Plex Sans KR', sans-serif;
   }
+  
+  input, textarea {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
 
   a {
     color: inherit;
@@ -15,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    -webkit-appearance: none;
   }
 `
 

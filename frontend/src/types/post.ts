@@ -18,3 +18,11 @@ export interface Post {
   lastUpdate?: string,
   readTime: number,
 }
+
+export interface PostInput {
+  title: string,
+  summary?: string,
+  contents: string,
+  tags?: string[],
+  seriesId?: string,
+}

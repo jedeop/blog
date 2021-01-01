@@ -9,6 +9,7 @@ import Header from './components/header'
 
 const HomePage = loadable(() => import('@/pages/HomePage'))
 const PostPage = loadable(() => import('@/pages/PostPage'))
+const WritePage = loadable(() => import('@/pages/WritePage'))
 
 const Container = styled.div`
   min-height: 100vh;
@@ -29,6 +30,9 @@ const App = () => (
         <Route exact path="/" render={() => <HomePage />} />
         <Route path="/post/:postId">
           <PostPage />
+        </Route>
+        <Route path="/write">
+          <WritePage />
         </Route>
       </Switch>
     </main>
