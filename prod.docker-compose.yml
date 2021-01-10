@@ -19,10 +19,9 @@ services:
     restart: always
     env_file: 
       - ./db.env
+      - ./backend.env
     expose:
       - 7878
-    depends_on:
-      - db
 
   proxy:
     build: ./proxy

@@ -7,7 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sqlx = { version = "0.4.2", default-features = false, features = [ "runtime-async-std-rustls", "postgres", "macros", "chrono", "uuid" ] } 
+sqlx = { version = "0.4.2", default-features = false, features = [ "runtime-async-std-native-tls", "postgres", "macros", "chrono", "uuid" ] } 
 tide = "0.15.0"
 async-std = { version = "1.8.0", features = ["attributes"] }
 async-graphql = "2.4.4"
@@ -15,7 +15,10 @@ async-graphql-tide = "2.4.4"
 anyhow = "1.0"
 base64 = "0.13.0"
 askama = "0.10.5"
-resvg = { git = "https://github.com/RazrFalcon/resvg", tag = "v0.13.0" }
-usvg = { git = "https://github.com/RazrFalcon/resvg", tag = "v0.13.0" }
+resvg = "0.13.0"
+usvg = "0.13.0"
 tiny-skia = "0.3"
 serde = "1.0"
+rand = "0.8"
+async-sqlx-session = { version = "0.2.1", features = ["pg"] }
+surf = "2.1.0"

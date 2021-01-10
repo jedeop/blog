@@ -1,26 +1,33 @@
+mod auth;
 mod database;
 mod model;
 mod thumbnail;
 mod utils;
 
-use std::{env, sync::Arc};
+use std::{env, sync::Arc, time::Duration};
 
 use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql::{EmptySubscription, Schema};
+use auth::GoogleOAuth2;
 use database::Database;
 use model::mutation::MutationRoot;
 use model::query::QueryRoot;
 
-use tide::{http::mime, Body, Response, StatusCode};
+use tide::{
+    http::{cookies::SameSite, mime},
+    Body, Response, StatusCode,
+};
 
 #[derive(Clone)]
 pub struct Context {
     db: Arc<Database>,
+    auth: GoogleOAuth2,
 }
 
 #[async_std::main]
 async fn main() -> anyhow::Result<()> {
-    let db = Arc::new(Database::new(&env::var("DATABASE_URL")?).await?);
+    let db_uri = env::var("DATABASE_URL")?;
+    let db = Arc::new(Database::new(&db_uri).await?);
 
     let schema = Schema::build(QueryRoot, MutationRoot, EmptySubscription)
         .data(Arc::clone(&db))
@@ -30,7 +37,26 @@ async fn main() -> anyhow::Result<()> {
     tide::log::start();
     let mut app = tide::with_state(Context {
         db: Arc::clone(&db),
+        auth: GoogleOAuth2::new(
+            env::var("GOOGLE_CLIENT_ID")?,
+            env::var("GOOGLE_CLIENT_SECRET")?,
+            env::var("OAUTH2_REDIRECT_URI")?,
+        ),
     });
+
+    let session_store = async_sqlx_session::PostgresSessionStore::new(&db_uri).await?;
+    session_store.migrate().await?;
+    session_store.spawn_cleanup_task(Duration::from_secs(60 * 60));
+
+    app.with(
+        tide::sessions::SessionMiddleware::new(
+            session_store,
+            env::var("TIDE_SECRET").unwrap().as_bytes(),
+        )
+        .with_cookie_path("/api")
+        .with_cookie_name("sid")
+        .with_same_site_policy(SameSite::Lax),
+    );
 
     app.at("/api/graphql")
         .post(async_graphql_tide::endpoint(schema));
@@ -45,7 +71,10 @@ async fn main() -> anyhow::Result<()> {
         Ok(res)
     });
 
-    app.at("/api/thumb/:post_id").get(thumbnail::Thumbnail::route);
+    app.at("/api/thumb/:post_id")
+        .get(thumbnail::Thumbnail::route);
+
+    app.at("/api/oauth2callback/google").get(auth::route);
 
     app.listen("0.0.0.0:7878").await?;
 
