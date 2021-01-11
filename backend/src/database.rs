@@ -1,9 +1,6 @@
 use anyhow::Result;
 use chrono::FixedOffset;
-use sqlx::{
-    types::{chrono, Uuid},
-    PgPool, Row,
-};
+use sqlx::{types::Uuid, PgPool, Row};
 
 use crate::model::{
     post::{Post, PostInput},

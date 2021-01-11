@@ -2,8 +2,7 @@ use std::sync::Arc;
 
 use anyhow::Result;
 use async_graphql::{Context, FieldResult, InputObject, Object, SimpleObject};
-use chrono::FixedOffset;
-use sqlx::types::chrono::{self, Utc};
+use chrono::{FixedOffset, Utc};
 use sqlx::types::Uuid;
 
 use crate::{database::Database, utils};

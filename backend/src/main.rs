@@ -8,7 +8,7 @@ use std::{env, sync::Arc, time::Duration};
 
 use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql::{EmptySubscription, Schema};
-use auth::GoogleOAuth2;
+use auth::google_oauth2;
 use database::Database;
 use model::mutation::MutationRoot;
 use model::query::QueryRoot;
@@ -21,7 +21,7 @@ use tide::{
 #[derive(Clone)]
 pub struct Context {
     db: Arc<Database>,
-    auth: GoogleOAuth2,
+    auth: google_oauth2::Client,
 }
 
 #[async_std::main]
@@ -37,7 +37,7 @@ async fn main() -> anyhow::Result<()> {
     tide::log::start();
     let mut app = tide::with_state(Context {
         db: Arc::clone(&db),
-        auth: GoogleOAuth2::new(
+        auth: google_oauth2::Client::new(
             env::var("GOOGLE_CLIENT_ID")?,
             env::var("GOOGLE_CLIENT_SECRET")?,
             env::var("OAUTH2_REDIRECT_URI")?,

@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use async_graphql::{Context, FieldResult, Object};
 use chrono::DateTime;
-use sqlx::types::{chrono, Uuid};
+use sqlx::types::Uuid;
 
 use super::{
     post::{Post, PostConnection},
