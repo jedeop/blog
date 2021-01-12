@@ -1,6 +1,13 @@
 use tide::{Redirect, Request, Response, StatusCode};
 
-use crate::{utils, Context};
+use crate::{
+    model::user::{User, UserOptional},
+    utils, Context,
+};
+
+pub enum Service {
+    GOOGLE,
+}
 
 pub mod google_oauth2 {
     use chrono::{Duration, TimeZone, Utc};
@@ -86,7 +93,7 @@ pub mod google_oauth2 {
         pub state: String,
         pub scope: String,
     }
-    #[derive(Serialize, Debug)]
+    #[derive(Serialize)]
     pub struct TokenReq<'a, 'b> {
         code: &'a str,
         client_id: &'b str,
@@ -94,15 +101,15 @@ pub mod google_oauth2 {
         redirect_uri: &'b str,
         grant_type: &'b str,
     }
-    #[derive(Deserialize, Debug)]
+    #[derive(Deserialize)]
     pub struct TokenRes {
-        expires_in: u64,
+        // expires_in: u64,
         pub id_token: String,
-        scope: String,
-        token_type: String,
+        // scope: String,
+        // token_type: String,
     }
 
-    #[derive(Debug, Deserialize)]
+    #[derive(Deserialize)]
     pub struct IDTokenClaims {
         pub aud: String,
         pub exp: i64,
@@ -136,13 +143,13 @@ pub mod google_oauth2 {
         }
     }
 
-    #[derive(Debug, Deserialize)]
+    #[derive(Deserialize)]
     pub struct IDTokenCert {
         n: String,
         e: String,
         kid: String,
     }
-    #[derive(Debug, Deserialize)]
+    #[derive(Deserialize)]
     pub struct IDTokenCerts {
         keys: Vec<IDTokenCert>,
     }
@@ -165,9 +172,23 @@ pub async fn route(mut req: Request<Context>) -> tide::Result {
             let nonce = session.get::<String>("openid_nonce").unwrap_or_default();
             let token = client.decode_id_token(&token_res.id_token, &nonce).await?;
 
-            let mut res = Response::new(StatusCode::Ok);
-            res.set_body(format!("\n{:?}", token));
+            let db = &req.state().db;
+            let user_from_token =
+                UserOptional::new(Service::GOOGLE, token.sub, token.name, token.picture);
+            let user_from_db = db.get_user_if_exist(&user_from_token.user_id).await?;
+            let user: User = match user_from_db {
+                Some(user_from_db) => match (user_from_token.name, user_from_token.avatar_url) {
+                    (Some(name), Some(avatar_url)) => {
+                        db.update_user(&user_from_token.user_id, &name, &avatar_url)
+                            .await?
+                    }
+                    _ => user_from_db,
+                },
+                None => db.create_user(&user_from_token.to_user()).await?,
+            };
 
+            let mut res = Response::new(StatusCode::Ok);
+            res.set_body(format!("{:?}", user));
             res
         }
         Err(_) => {

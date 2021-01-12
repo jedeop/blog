@@ -47,3 +47,10 @@ CREATE TRIGGER update_timestamp
 BEFORE UPDATE ON post
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_update_timestamp();
+
+CREATE TABLE IF NOT EXISTS users (
+  user_id VARCHAR(258) NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  avatar_url TEXT NOT NULL,
+  PRIMARY KEY(user_id)
+);

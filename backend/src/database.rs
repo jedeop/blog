@@ -6,6 +6,7 @@ use crate::model::{
     post::{Post, PostInput},
     series::{Series, SeriesInput},
     tag::Tag,
+    user::User,
 };
 use crate::utils;
 
@@ -169,5 +170,49 @@ impl Database {
         .await?;
 
         Ok(tags)
+    }
+}
+
+impl Database {
+    pub async fn create_user(&self, user: &User) -> Result<User> {
+        let user: User = sqlx::query_as::<_, User>(
+            "INSERT INTO users(user_id, name, avatar_url)
+            VALUES ($1, $2, $3)
+            RETURNING *;",
+        )
+        .bind(&user.user_id)
+        .bind(&user.name)
+        .bind(&user.avatar_url)
+        .fetch_one(&self.pool)
+        .await?;
+
+        Ok(user)
+    }
+    pub async fn get_user_if_exist(&self, user_id: &str) -> Result<Option<User>> {
+        let user: Option<User> = sqlx::query_as::<_, User>(
+            "SELECT * FROM users
+            WHERE user_id = $1",
+        )
+        .bind(user_id)
+        .fetch_optional(&self.pool)
+        .await?;
+
+        Ok(user)
+    }
+    pub async fn update_user(&self, user_id: &str, name: &str, avatar_url: &str) -> Result<User> {
+        let user: User = sqlx::query_as::<_, User>(
+            "UPDATE users
+            SET name = $1,
+                avatar_url = $2
+            WHERE user_id = $3
+            RETURNING *;",
+        )
+        .bind(name)
+        .bind(avatar_url)
+        .bind(user_id)
+        .fetch_one(&self.pool)
+        .await?;
+
+        Ok(user)
     }
 }
