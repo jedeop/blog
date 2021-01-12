@@ -53,7 +53,6 @@ async fn main() -> anyhow::Result<()> {
             session_store,
             env::var("TIDE_SECRET").unwrap().as_bytes(),
         )
-        .with_cookie_path("/api")
         .with_cookie_name("sid")
         .with_same_site_policy(SameSite::Lax),
     );

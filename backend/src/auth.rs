@@ -187,9 +187,15 @@ pub async fn route(mut req: Request<Context>) -> tide::Result {
                 None => db.create_user(&user_from_token.to_user()).await?,
             };
 
-            let mut res = Response::new(StatusCode::Ok);
-            res.set_body(format!("{:?}", user));
-            res
+            drop(session);
+            drop(db);
+
+            let session = req.session_mut();
+            session.remove("oauth2_state");
+            session.remove("openid_nonce");
+            session.insert("user", &user)?;
+
+            Redirect::new("/").into()
         }
         Err(_) => {
             let state = utils::generate_random_str(50);
