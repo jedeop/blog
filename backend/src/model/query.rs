@@ -37,7 +37,7 @@ impl QueryRoot {
                 let decode = base64::decode(after)?;
                 String::from_utf8(decode)?
             }
-            None => String::from("1970-01-01T00:00:00+00:00"),
+            None => String::from("9999-01-01T00:00:00+00:00"),
         };
         let after = DateTime::parse_from_rfc3339(&after)?;
 

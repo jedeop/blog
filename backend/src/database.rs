@@ -45,8 +45,8 @@ impl Database {
         let posts: Vec<Post> = sqlx::query_as::<_, Post>(
             "SELECT *
             FROM post
-            WHERE created_at > $1
-            ORDER BY created_at ASC
+            WHERE created_at < $1
+            ORDER BY created_at DESC
             LIMIT $2",
         )
         .bind(after)

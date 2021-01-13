@@ -56,6 +56,7 @@ export default function () {
       <form method="post"
         onSubmit={ e => {
           e.preventDefault()
+          if (!title) return;
           createPost({ variables: {
             post: {
               title,
@@ -82,7 +83,7 @@ export default function () {
             }
           ]} 
         />
-        <BaseButton type="submit" value="저장하기" onClick={() => console.log('click')} />
+        <BaseButton type="submit" value="저장하기" onClick={() => {}} />
       </form>
     </Container>
   )
