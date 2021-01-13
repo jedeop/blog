@@ -1,4 +1,4 @@
-use std::{env, sync::Arc};
+use std::sync::Arc;
 
 use async_graphql::{Context, FieldResult, Object};
 use chrono::DateTime;
@@ -66,13 +66,7 @@ impl QueryRoot {
         let user = ctx.data::<Option<User>>()?;
 
         Ok(match user {
-            Some(User { user_id, .. }) => {
-                if user_id == &env::var("OWNER_ID")? {
-                    true
-                } else {
-                    false
-                }
-            }
+            Some(user) => user.is_owner(),
             None => false,
         })
     }

@@ -1,3 +1,5 @@
+use std::env;
+
 use crate::auth::Service;
 
 #[derive(sqlx::FromRow)]
@@ -27,7 +29,7 @@ impl UserOptional {
             avatar_url,
         }
     }
-    pub fn to_user(self) -> User {
+    pub fn to_user_with_default(self) -> User {
         User {
             user_id: self.user_id,
             name: self.name.unwrap_or("???".to_string()),
@@ -41,4 +43,9 @@ pub struct User {
     pub user_id: String,
     pub name: String,
     pub avatar_url: String,
+}
+impl User {
+    pub fn is_owner(&self) -> bool {
+        &self.user_id == &env::var("OWNER_ID").expect("expected OWNER_ID var in env")
+    }
 }

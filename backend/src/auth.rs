@@ -184,7 +184,10 @@ pub async fn route(mut req: Request<Context>) -> tide::Result {
                     }
                     _ => user_from_db,
                 },
-                None => db.create_user(&user_from_token.to_user()).await?,
+                None => {
+                    db.create_user(&user_from_token.to_user_with_default())
+                        .await?
+                }
             };
 
             drop(session);
