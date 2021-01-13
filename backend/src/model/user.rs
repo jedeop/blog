@@ -29,11 +29,13 @@ impl UserOptional {
             avatar_url,
         }
     }
-    pub fn to_user_with_default(self) -> User {
+    pub fn into_user_with_default(self) -> User {
         User {
             user_id: self.user_id,
-            name: self.name.unwrap_or("???".to_string()),
-            avatar_url: self.avatar_url.unwrap_or("/api/noavatar".to_string()), // TODO: default avatar url
+            name: self.name.unwrap_or_else(|| "???".to_string()),
+            avatar_url: self
+                .avatar_url
+                .unwrap_or_else(|| "/api/noavatar".to_string()), // TODO: default avatar url
         }
     }
 }
@@ -46,6 +48,6 @@ pub struct User {
 }
 impl User {
     pub fn is_owner(&self) -> bool {
-        &self.user_id == &env::var("OWNER_ID").expect("expected OWNER_ID var in env")
+        self.user_id == env::var("OWNER_ID").expect("expected OWNER_ID var in env")
     }
 }

@@ -146,7 +146,7 @@ impl Database {
 }
 
 impl Database {
-    pub async fn get_tags(&self, tag_ids: &Vec<Uuid>) -> Result<Vec<Tag>> {
+    pub async fn get_tags(&self, tag_ids: &[Uuid]) -> Result<Vec<Tag>> {
         let tags: Vec<Tag> = sqlx::query_as::<_, Tag>(
             "SELECT tag_id, name
             FROM tag
@@ -158,7 +158,7 @@ impl Database {
 
         Ok(tags)
     }
-    pub async fn create_tags(&self, tags: &Vec<String>) -> Result<Vec<Tag>> {
+    pub async fn create_tags(&self, tags: &[String]) -> Result<Vec<Tag>> {
         let tags: Vec<Tag> = sqlx::query_as::<_, Tag>(
             "INSERT INTO tag (name)
             SELECT * FROM UNNEST($1)

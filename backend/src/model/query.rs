@@ -57,10 +57,7 @@ impl QueryRoot {
     async fn is_logined(&self, ctx: &Context<'_>) -> FieldResult<bool> {
         let user = ctx.data::<Option<User>>()?;
 
-        Ok(match user {
-            Some(_) => true,
-            None => false,
-        })
+        Ok(user.is_some())
     }
     async fn is_owner(&self, ctx: &Context<'_>) -> FieldResult<bool> {
         let user = ctx.data::<Option<User>>()?;

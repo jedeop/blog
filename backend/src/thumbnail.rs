@@ -29,7 +29,7 @@ fn slipt_text(text: &str, count: u64) -> Vec<String> {
     let mut line = String::new();
     for word in words {
         line.push_str(word);
-        line.push_str(" ");
+        line.push(' ');
         if line.len() >= max {
             result.push(line.clone().trim().to_owned());
             line.clear();
@@ -37,9 +37,7 @@ fn slipt_text(text: &str, count: u64) -> Vec<String> {
     }
     result.push(line.trim().to_owned());
 
-    let result = result.into_iter().filter(|line| !line.is_empty()).collect();
-
-    result
+    result.into_iter().filter(|line| !line.is_empty()).collect()
 }
 
 impl Thumbnail {
@@ -60,8 +58,10 @@ impl Thumbnail {
 
         let svg = thumb.render()?;
 
-        let mut opt = usvg::Options::default();
-        opt.font_family = "IBM Plex Sans KR".to_string();
+        let mut opt = usvg::Options {
+            font_family: "IBM Plex Sans KR".to_string(),
+            ..Default::default()
+        };
         opt.fontdb.load_system_fonts();
         opt.fontdb.set_generic_families();
 
@@ -69,7 +69,7 @@ impl Thumbnail {
 
         let pixmap_size = rtree.svg_node().size.to_screen_size();
         let mut pixmap = tiny_skia::Pixmap::new(pixmap_size.width(), pixmap_size.height())
-            .ok_or(anyhow::anyhow!("Cannot create Pixmap"))?;
+            .ok_or_else(|| anyhow::anyhow!("Cannot create Pixmap"))?;
         resvg::render(&rtree, usvg::FitTo::Original, pixmap.as_mut());
 
         Ok(Self(pixmap))

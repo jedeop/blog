@@ -70,8 +70,8 @@ pub mod google_oauth2 {
             let kid = header.kid.unwrap_or_default();
             let cert = certs
                 .iter()
-                .find(|cert| &cert.kid == &kid)
-                .ok_or(anyhow::anyhow!("id token cert is wrong"))?;
+                .find(|cert| cert.kid == kid)
+                .ok_or_else(|| anyhow::anyhow!("id token cert is wrong"))?;
 
             let token = decode::<IDTokenClaims>(
                 encoded_id_token,
@@ -125,10 +125,10 @@ pub mod google_oauth2 {
             if self.iss != "https://accounts.google.com" && self.iss != "accounts.google.com" {
                 return Err(anyhow::anyhow!("Wrong iss: {}", &self.iss));
             };
-            if &self.aud != &client_id {
+            if self.aud != client_id {
                 return Err(anyhow::anyhow!("Wrong aud: {}", &self.aud));
             };
-            if &self.nonce != &nonce {
+            if self.nonce != nonce {
                 return Err(anyhow::anyhow!(
                     "Wrong nonce\nfrom token: {}\nfrom session: {}",
                     &self.nonce,
@@ -185,13 +185,10 @@ pub async fn route(mut req: Request<Context>) -> tide::Result {
                     _ => user_from_db,
                 },
                 None => {
-                    db.create_user(&user_from_token.to_user_with_default())
+                    db.create_user(&user_from_token.into_user_with_default())
                         .await?
                 }
             };
-
-            drop(session);
-            drop(db);
 
             let session = req.session_mut();
             session.remove("oauth2_state");
