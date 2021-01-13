@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{env, sync::Arc};
 
 use async_graphql::{Context, FieldResult, Object};
 use chrono::DateTime;
@@ -7,6 +7,7 @@ use sqlx::types::Uuid;
 use super::{
     post::{Post, PostConnection},
     series::Series,
+    user::User,
 };
 use crate::Database;
 
@@ -51,5 +52,28 @@ impl QueryRoot {
         let series = db.get_series_by_id(series_id).await?;
 
         Ok(series)
+    }
+
+    async fn is_logined(&self, ctx: &Context<'_>) -> FieldResult<bool> {
+        let user = ctx.data::<Option<User>>()?;
+
+        Ok(match user {
+            Some(_) => true,
+            None => false,
+        })
+    }
+    async fn is_owner(&self, ctx: &Context<'_>) -> FieldResult<bool> {
+        let user = ctx.data::<Option<User>>()?;
+
+        Ok(match user {
+            Some(User { user_id, .. }) => {
+                if user_id == &env::var("OWNER_ID")? {
+                    true
+                } else {
+                    false
+                }
+            }
+            None => false,
+        })
     }
 }

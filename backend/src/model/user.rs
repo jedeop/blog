@@ -36,7 +36,7 @@ impl UserOptional {
     }
 }
 
-#[derive(sqlx::FromRow, Debug, serde::Serialize)]
+#[derive(sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize)]
 pub struct User {
     pub user_id: String,
     pub name: String,

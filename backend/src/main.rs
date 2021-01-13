@@ -10,12 +10,12 @@ use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql::{EmptySubscription, Schema};
 use auth::google_oauth2;
 use database::Database;
-use model::mutation::MutationRoot;
 use model::query::QueryRoot;
+use model::{mutation::MutationRoot, user::User};
 
 use tide::{
     http::{cookies::SameSite, mime},
-    Body, Response, StatusCode,
+    Body, Redirect, Request, Response, StatusCode,
 };
 
 #[derive(Clone)]
@@ -57,8 +57,16 @@ async fn main() -> anyhow::Result<()> {
         .with_same_site_policy(SameSite::Lax),
     );
 
-    app.at("/api/graphql")
-        .post(async_graphql_tide::endpoint(schema));
+    app.at("/api/graphql").post(move |req: Request<Context>| {
+        let schema = schema.clone();
+        async move {
+            let user = req.session().get::<User>("user");
+
+            let mut req = async_graphql_tide::receive_request(req).await?;
+            req = req.data(user);
+            async_graphql_tide::respond(schema.execute(req).await)
+        }
+    });
 
     app.at("/").get(|_| async move {
         let mut res = Response::new(StatusCode::Ok);
@@ -74,6 +82,12 @@ async fn main() -> anyhow::Result<()> {
         .get(thumbnail::Thumbnail::route);
 
     app.at("/api/oauth2callback/google").get(auth::route);
+    app.at("/api/logout")
+        .get(|mut req: Request<Context>| async move {
+            let session = req.session_mut();
+            session.remove("user");
+            Ok(Redirect::new("/"))
+        });
 
     app.listen("0.0.0.0:7878").await?;
 

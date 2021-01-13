@@ -2,7 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from './logo'
-import { Edit3, LogIn } from 'react-feather'
+import { Edit3, LogIn, LogOut } from 'react-feather'
+import { gql, useQuery } from '@apollo/client'
+import Loading from './loading'
+
+const IS_LOGINED = gql`
+  query IsLogined {
+    isLogined
+    isOwner
+  }
+`
+interface IsLoginedData {
+  isLogined: boolean,
+  isOwner: boolean,
+}
 
 const Container = styled.header`
   padding: 5px 15px;
@@ -26,20 +39,44 @@ const LeftLink = styled(FlexLink)`
 const RightLink = styled(FlexLink)`
   margin: 0px 5px;
 `
+const RightA = styled.a`
+  display: flex;
+  align-items: center;
+  margin: 0px 5px;
+`
 
 export default function Header() {
+  const { loading, error, data } = useQuery<IsLoginedData>(IS_LOGINED);
   return (
     <Container>
       <LeftLink to="/">
         <Logo width={100} />
         <Title>블로그</Title>
       </LeftLink>
-      <RightLink to="/write">
-        <Edit3 size={25} />
-      </RightLink>
-      <RightLink to="/login">
-        <LogIn size={25} />
-      </RightLink>
+      {
+        loading ? <Loading />
+        : error || !data ? <div>에러 발생: {error}</div>
+        : data.isLogined ? (
+          <>
+            {
+              data.isOwner ? (
+                <RightLink to="/write">
+                  <Edit3 size={25} />
+                </RightLink>
+              )
+              : <div></div>
+            }
+            <RightA href="/api/logout">
+              <LogOut size={25} />
+            </RightA>
+          </>
+        )
+        : (
+          <RightLink to="/login">
+            <LogIn size={25} />
+          </RightLink>
+        )
+      }
     </Container>
   )
 }
