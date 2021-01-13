@@ -10,6 +10,7 @@ import Header from './components/header'
 const HomePage = loadable(() => import('@/pages/HomePage'))
 const PostPage = loadable(() => import('@/pages/PostPage'))
 const WritePage = loadable(() => import('@/pages/WritePage'))
+const LoginPage = loadable(() => import('@/pages/LoginPage'))
 
 const Container = styled.div`
   min-height: 100vh;
@@ -33,6 +34,9 @@ const App = () => (
         </Route>
         <Route path="/write">
           <WritePage />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
         </Route>
       </Switch>
     </main>

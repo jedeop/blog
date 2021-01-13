@@ -37,7 +37,7 @@ export default function Header() {
       <RightLink to="/write">
         <Edit3 size={25} />
       </RightLink>
-      <RightLink to="/write">
+      <RightLink to="/login">
         <LogIn size={25} />
       </RightLink>
     </Container>
