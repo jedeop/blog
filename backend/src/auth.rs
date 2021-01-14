@@ -1,12 +1,22 @@
+use std::fmt;
+
 use tide::{Redirect, Request, Response, StatusCode};
 
 use crate::{
-    model::user::{User, UserOptional},
+    model::user::{User, UserInput},
     utils, Context,
 };
 
 pub enum Service {
     GOOGLE,
+}
+impl fmt::Display for Service {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let str = match self {
+            Self::GOOGLE => "GOO",
+        };
+        write!(f, "{}", str)
+    }
 }
 
 pub mod google_oauth2 {
@@ -173,22 +183,8 @@ pub async fn route(mut req: Request<Context>) -> tide::Result {
             let token = client.decode_id_token(&token_res.id_token, &nonce).await?;
 
             let db = &req.state().db;
-            let user_from_token =
-                UserOptional::new(Service::GOOGLE, token.sub, token.name, token.picture);
-            let user_from_db = db.get_user_if_exist(&user_from_token.user_id).await?;
-            let user: User = match user_from_db {
-                Some(user_from_db) => match (user_from_token.name, user_from_token.avatar_url) {
-                    (Some(name), Some(avatar_url)) => {
-                        db.update_user(&user_from_token.user_id, &name, &avatar_url)
-                            .await?
-                    }
-                    _ => user_from_db,
-                },
-                None => {
-                    db.create_user(&user_from_token.into_user_with_default())
-                        .await?
-                }
-            };
+            let user_input = UserInput::new(Service::GOOGLE, token.sub, token.name, token.picture);
+            let user: User = db.create_or_update_user(user_input).await?;
 
             let session = req.session_mut();
             session.remove("oauth2_state");

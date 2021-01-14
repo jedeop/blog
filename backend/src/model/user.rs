@@ -3,39 +3,24 @@ use std::env;
 use crate::auth::Service;
 
 #[derive(sqlx::FromRow)]
-pub struct UserOptional {
+pub struct UserInput {
     pub user_id: String,
     pub name: Option<String>,
     pub avatar_url: Option<String>,
 }
-impl UserOptional {
+impl UserInput {
     pub fn new(
         service: Service,
         user_id: String,
         name: Option<String>,
         avatar_url: Option<String>,
     ) -> Self {
-        let user_id = format!(
-            "{}{}",
-            match service {
-                Service::GOOGLE => "GOO",
-            },
-            user_id,
-        );
+        let user_id = format!("{}{}", service.to_string(), user_id,);
 
         Self {
             user_id,
             name,
             avatar_url,
-        }
-    }
-    pub fn into_user_with_default(self) -> User {
-        User {
-            user_id: self.user_id,
-            name: self.name.unwrap_or_else(|| "???".to_string()),
-            avatar_url: self
-                .avatar_url
-                .unwrap_or_else(|| "/api/noavatar".to_string()), // TODO: default avatar url
         }
     }
 }
