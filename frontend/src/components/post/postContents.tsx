@@ -24,6 +24,9 @@ interface PostContentsProp {
 }
 
 const Body = styled.div`
+  img {
+    max-width: 100%;
+  }
 `
 
 const PostContents = ({ contents }: PostContentsProp) => {

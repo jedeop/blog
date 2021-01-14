@@ -51,9 +51,7 @@ const Container = styled.div`
 `
 
 export default function PostList() {
-  const { loading, error, data, fetchMore } = useQuery<GetPostsData, GetPostsVar>(GET_POSTS, {
-    fetchPolicy: "cache-and-network",
-  })
+  const { loading, error, data, fetchMore } = useQuery<GetPostsData, GetPostsVar>(GET_POSTS)
 
   const pageEndRef = useRef<HTMLDivElement>(null)
 
