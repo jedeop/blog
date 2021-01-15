@@ -115,6 +115,17 @@ impl Database {
 
         Ok(post)
     }
+    pub async fn delete_post(&self, post_id: &Uuid) -> Result<()> {
+        sqlx::query(
+            "DELETE FROM post
+            WHERE post_id = $1",
+        )
+        .bind(&post_id)
+        .execute(&self.pool)
+        .await?;
+
+        Ok(())
+    }
 }
 
 impl Database {

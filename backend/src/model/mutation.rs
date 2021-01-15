@@ -51,6 +51,21 @@ impl MutationRoot {
 
         Ok(post)
     }
+    async fn delete_post(&self, ctx: &Context<'_>, post_id: Uuid) -> FieldResult<Uuid> {
+        let user = ctx.data::<Option<User>>()?;
+        let is_owner = match user {
+            Some(user) => user.is_owner(),
+            None => false,
+        };
+        if !is_owner {
+            return Err("Forbidden".into());
+        }
+
+        let db = ctx.data::<Arc<Database>>()?;
+        db.delete_post(&post_id).await?;
+
+        Ok(post_id)
+    }
 
     async fn create_series(&self, ctx: &Context<'_>, series: SeriesInput) -> FieldResult<Series> {
         let user = ctx.data::<Option<User>>()?;
