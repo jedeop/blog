@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from 'react';
-import styled from 'styled-components';
+import React, { ChangeEvent, ReactElement } from "react";
+import styled from "styled-components";
 
 const StyledTextArea = styled.textarea`
   border: none;
@@ -8,24 +8,24 @@ const StyledTextArea = styled.textarea`
   :focus {
     background-color: hsl(0, 0%, 95%);
   }
-`
+`;
 
 interface BaseTextAreaProps {
   value: string,
-  onChange: Function,
+  onChange: (value: string) => void,
   placeholder?: string,
   rows?: number,
   className?: string,
 }
 
-export default function BaseTextArea({ value, onChange, placeholder, className, rows }: BaseTextAreaProps) {
+export default function BaseTextArea({ value, onChange, placeholder, className, rows }: BaseTextAreaProps): ReactElement {
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
-    onChange(event.target.value)
+    onChange(event.target.value);
   }
   return (                                                         
     <StyledTextArea className={className} rows={rows} value={value}
       onChange={handleChange}
       placeholder={placeholder} >
     </StyledTextArea>
-  )
+  );
 }

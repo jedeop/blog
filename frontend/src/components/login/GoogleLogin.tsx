@@ -1,6 +1,6 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
+import React, { ReactElement } from "react";
+import { Helmet } from "react-helmet";
+import styled from "styled-components";
 
 const Login = styled.a`
   font-weight: 500;
@@ -13,16 +13,16 @@ const Login = styled.a`
   :hover {
     box-shadow: hsl(0, 0%, 80%) 0px 0px 10px 0px;
   }
-`
+`;
 const Text = styled.div`
   font-family: 'Roboto', 'IBM Plex Sans KR';
   margin-left: 28.8px;
   margin-right: 15px;
   font-size: 16.8px;
   color: hsl(0, 0%, 30%);
-`
+`;
 
-export default function GoogleLogin() {
+export default function GoogleLogin(): ReactElement {
   return (
     <>
       <Helmet>
@@ -42,5 +42,5 @@ export default function GoogleLogin() {
         </Text>
       </Login>
     </>
-  )
+  );
 }

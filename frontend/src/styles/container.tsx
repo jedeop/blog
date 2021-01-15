@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from "styled-components";
 
 const Container = css`
   margin: auto;
@@ -9,6 +9,6 @@ const Container = css`
   @media screen and (min-width: 1024px) {
     width: 800px;
   }
-`
+`;
 
-export default Container
+export default Container;

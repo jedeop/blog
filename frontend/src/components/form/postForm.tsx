@@ -1,11 +1,11 @@
-import React from 'react'
-import Switch from '@/components/switch'
-import styled from 'styled-components'
-import BaseContainer from '@/styles/container'
-import PostContents from '../post/postContents'
-import BaseButton from './BaseButton'
-import BaseInput from './BaseInput'
-import BaseTextArea from './BaseTextArea'
+import React, { ReactElement } from "react";
+import Switch from "@/components/switch";
+import styled from "styled-components";
+import BaseContainer from "@/styles/container";
+import PostContents from "../post/postContents";
+import BaseButton from "./BaseButton";
+import BaseInput from "./BaseInput";
+import BaseTextArea from "./BaseTextArea";
 
 const Container = styled.div`
   ${BaseContainer}
@@ -20,10 +20,10 @@ const Container = styled.div`
     font-size: 16px;
     display: block;
   }
-`
+`;
 const ContentsTextArea = styled(BaseTextArea)`
   resize: vertical;
-`
+`;
 
 interface PostFormProps {
   title: [string, (value:string) => void],
@@ -32,7 +32,7 @@ interface PostFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
 }
 
-export default function PostForm({ title: [title, setTitle], summary: [summary, setSummary], contents: [contents, setContents], onSubmit }: PostFormProps) {
+export default function PostForm({ title: [title, setTitle], summary: [summary, setSummary], contents: [contents, setContents], onSubmit }: PostFormProps): ReactElement {
   return (
     <Container>
       <form method="post"
@@ -52,8 +52,8 @@ export default function PostForm({ title: [title, setTitle], summary: [summary, 
             }
           ]} 
         />
-        <BaseButton type="submit" value="저장하기" onClick={() => {}} />
+        <BaseButton type="submit" value="저장하기" onClick={() => null} />
       </form>
     </Container>
-  )
+  );
 }
