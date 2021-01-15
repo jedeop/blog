@@ -3,7 +3,7 @@ use chrono::FixedOffset;
 use sqlx::{types::Uuid, PgPool, Row};
 
 use crate::model::{
-    post::{Post, PostInput},
+    post::{Post, PostInput, PostPartialInput},
     series::{Series, SeriesInput},
     tag::Tag,
     user::{User, UserInput},
@@ -82,6 +82,38 @@ impl Database {
         .await?;
 
         Ok(new_post)
+    }
+    pub async fn update_post(&self, post_id: Uuid, post_input: PostPartialInput) -> Result<Post> {
+        let tag_ids: Option<Vec<Uuid>> = match &post_input.tags {
+            Some(tags) => Some(
+                self.create_tags(tags)
+                    .await?
+                    .into_iter()
+                    .map(|tag| tag.tag_id)
+                    .collect(),
+            ),
+            None => None,
+        };
+        let post: Post = sqlx::query_as::<_, Post>(
+            "UPDATE post
+            SET title = COALESCE($2, post.title),
+                summary = COALESCE($3, post.summary),
+                contents = COALESCE($4, post.contents),
+                tags = COALESCE($5, post.tags),
+                series_id = COALESCE($6, post.series_id)
+            WHERE post_id = $1
+            RETURNING *;",
+        )
+        .bind(&post_id)
+        .bind(&post_input.title)
+        .bind(&post_input.summary)
+        .bind(&post_input.contents)
+        .bind(&tag_ids)
+        .bind(&post_input.series_id)
+        .fetch_one(&self.pool)
+        .await?;
+
+        Ok(post)
     }
 }
 

@@ -76,6 +76,14 @@ pub struct PostInput {
     pub tags: Option<Vec<String>>,
     pub series_id: Option<Uuid>,
 }
+#[derive(InputObject)]
+pub struct PostPartialInput {
+    pub title: Option<String>,
+    pub summary: Option<String>,
+    pub contents: Option<String>,
+    pub tags: Option<Vec<String>>,
+    pub series_id: Option<Uuid>,
+}
 
 #[derive(SimpleObject)]
 pub struct PostConnection {
