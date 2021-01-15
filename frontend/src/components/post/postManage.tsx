@@ -13,7 +13,7 @@ const Container = styled.div`
       color: black;
     }
   }
-  justify-content: right;
+  justify-content: flex-end;
 `
 
 interface PostManageProps {
