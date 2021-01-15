@@ -14,7 +14,7 @@ interface BaseInputProps {
   placeholder?: string,
   maxLength?: number,
   value: any,
-  onChange: Function,
+  onChange: (value: string) => void,
 }
 export default function BaseInput({ type, placeholder, maxLength, value, onChange }: BaseInputProps) {
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

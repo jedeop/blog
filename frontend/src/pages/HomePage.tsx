@@ -13,7 +13,7 @@ const Home = () => (
     <Helmet>
       <title>제덮 블로그</title>
     </Helmet>
-    <Title>글 목록</Title>
+    {/* <Title>글 목록</Title> */}
     <PostList />
   </div>
 )

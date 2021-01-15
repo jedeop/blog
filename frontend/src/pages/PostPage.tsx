@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import BaseContainer from '@/styles/container'
 import Loading from '@/components/loading'
 import { Helmet } from 'react-helmet'
+import PostManage from '@/components/post/postManage'
 
 interface Params {
   postId: string,
@@ -24,10 +25,13 @@ const GET_POST = gql`
       lastUpdate
       readTime
     }
+
+    isOwner
   }
 `
 interface GetPostData {
   post: Post,
+  isOwner: boolean,
 }
 interface GetPostVariable {
   id: string,
@@ -56,9 +60,9 @@ const Post = () => {
         <meta property="og:description" content={post.summary} />
         <meta property="og:image" content={`/api/thumb/${post.postId}`} />
       </Helmet>
-      <img src={`/api/thumb/${post.postId}`} style={{display: 'none'}} />
       <Container>
         <PostTitle title={post.title} createdAt={post.createdAt} readTime={post.readTime} />
+        {data.isOwner? <PostManage postId={post.postId} /> : null}
         <PostContents contents={post.contents} />
       </Container>
     </div>

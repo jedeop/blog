@@ -29,13 +29,16 @@ const App = () => (
     <main>
       <Switch>
         <Route exact path="/" render={() => <HomePage />} />
-        <Route path="/post/:postId">
+        <Route exact path="/post/:postId">
           <PostPage />
         </Route>
-        <Route path="/write">
+        <Route exact path="/write">
           <WritePage />
         </Route>
-        <Route path="/login">
+        <Route exact path="/write/:postId">
+          <WritePage />
+        </Route>
+        <Route exact path="/login">
           <LoginPage />
         </Route>
       </Switch>
