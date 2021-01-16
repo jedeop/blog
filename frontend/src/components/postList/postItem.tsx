@@ -21,7 +21,7 @@ const Hr = styled.div`
 `;
 const Summary = styled.div`
   font-size: 18px;
-  color: #707070;
+  color: hsl(0, 0%, 45%);
 `;
 const Meta = styled.div`
   font-size: 16px;

@@ -17,6 +17,7 @@ export interface Post {
   createdAt: string,
   lastUpdate?: string,
   readTime: number,
+  tags: Tag[],
 }
 
 export interface PostInput {

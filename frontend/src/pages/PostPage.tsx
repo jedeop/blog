@@ -24,6 +24,10 @@ const GET_POST = gql`
       createdAt
       lastUpdate
       readTime
+      tags {
+        tagId
+        name
+      }
     }
 
     isOwner
@@ -61,7 +65,7 @@ export default function Post(): ReactElement {
         <meta property="og:image" content={`/api/thumb/${post.postId}`} />
       </Helmet>
       <Container>
-        <PostTitle title={post.title} createdAt={post.createdAt} readTime={post.readTime} />
+        <PostTitle title={post.title} summary={post.summary} createdAt={post.createdAt} readTime={post.readTime} tags={post.tags} />
         {data.isOwner? <PostManage postId={post.postId} /> : null}
         <PostContents contents={post.contents} />
       </Container>
