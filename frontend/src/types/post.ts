@@ -1,4 +1,4 @@
-import { Tag } from "./tag";
+import { Tag, TagSimple } from "./tag";
 
 export interface PostForList {
   postId: string,
@@ -24,5 +24,13 @@ export interface PostInput {
   summary?: string,
   contents: string,
   tags?: string[],
+  seriesId?: string,
+}
+
+export interface PostForUpdate {
+  title: string,
+  summary?: string,
+  contents: string,
+  tags?: TagSimple[],
   seriesId?: string,
 }

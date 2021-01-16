@@ -6,7 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack",
-    "start": "node ./dist/server/main.js"
+    "start": "node ./dist/server/main.js",
+    "lint": "eslint --fix ./src/**"
   },
   "dependencies": {
     "@apollo/client": "^3.3.2",

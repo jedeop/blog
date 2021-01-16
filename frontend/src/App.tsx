@@ -10,6 +10,7 @@ import Header from "./components/header";
 const HomePage = loadable(() => import("@/pages/HomePage"));
 const PostPage = loadable(() => import("@/pages/PostPage"));
 const WritePage = loadable(() => import("@/pages/WritePage"));
+const UpdatePage = loadable(() => import("@/pages/UpdatePage"));
 const LoginPage = loadable(() => import("@/pages/LoginPage"));
 
 const Container = styled.div`
@@ -37,7 +38,7 @@ export default function App(): ReactElement {
             <WritePage />
           </Route>
           <Route exact path="/write/:postId">
-            <WritePage />
+            <UpdatePage />
           </Route>
           <Route exact path="/login">
             <LoginPage />
