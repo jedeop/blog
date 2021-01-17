@@ -1,5 +1,5 @@
 export interface Tag {
-  tag_id: string,
+  tagId: string,
   name: string,
 }
 export interface TagSimple {

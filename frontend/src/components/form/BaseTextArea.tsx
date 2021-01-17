@@ -16,14 +16,16 @@ interface BaseTextAreaProps {
   placeholder?: string,
   rows?: number,
   className?: string,
+  label: string,
 }
 
-export default function BaseTextArea({ value, onChange, placeholder, className, rows }: BaseTextAreaProps): ReactElement {
+export default function BaseTextArea({ value, onChange, placeholder, className, rows, label }: BaseTextAreaProps): ReactElement {
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     onChange(event.target.value);
   }
   return (                                                         
     <StyledTextArea className={className} rows={rows} value={value}
+      aria-label={label}
       onChange={handleChange}
       placeholder={placeholder} >
     </StyledTextArea>

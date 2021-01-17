@@ -17,6 +17,7 @@ query GetPosts ($cursor: String) {
         createdAt
         readTime
         tags {
+          tagId
           name
         }
       }

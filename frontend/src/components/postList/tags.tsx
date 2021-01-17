@@ -9,7 +9,7 @@ interface TagsProps {
   tags: Tag[]
 }
 export default function Tags({ tags }: TagsProps): ReactElement {
-  const tagsList = tags.map(tag => <Tag key={tag.tag_id}>#{tag.name}</Tag>);
+  const tagsList = tags.map(tag => <Tag key={tag.tagId}>#{tag.name}</Tag>);
   return (
     <>
       {tagsList}

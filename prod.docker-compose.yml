@@ -7,7 +7,7 @@ services:
     container_name: frontend
     restart: always
     environment: 
-      BACKEND_URL: http://backend:7878/graphql
+      BACKEND_URL: http://backend:7878/api/graphql
     expose: 
       - 3000
 

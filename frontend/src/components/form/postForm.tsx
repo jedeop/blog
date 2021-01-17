@@ -46,14 +46,14 @@ export default function PostForm({
       <form method="post"
         onSubmit={onSubmit}
       >
-        <BaseInput type="text" placeholder="제목을 입력하세요" maxLength={50} value={title} onChange={setTitle} />
-        <BaseInput type="text" placeholder="개요를 입력하세요" maxLength={100} value={summary} onChange={setSummary} />
+        <BaseInput type="text" label="제목" placeholder="제목을 입력하세요" maxLength={50} value={title} onChange={setTitle} />
+        <BaseInput type="text" label="개요" placeholder="개요를 입력하세요" maxLength={100} value={summary} onChange={setSummary} />
         <TagInput tags={tags} setTags={setTags} />
         <Switch 
           items={[
             {
               name: "작성하기",
-              children: <ContentsTextArea value={contents} onChange={setContents} placeholder="본문 내용을 입력하세요" rows={20} />
+              children: <ContentsTextArea value={contents} onChange={setContents} label="본문" placeholder="본문 내용을 입력하세요" rows={20} />
             },
             {
               name: "미리보기",

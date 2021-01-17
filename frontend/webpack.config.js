@@ -12,7 +12,7 @@ const getConfig = (mode) => {
 
   return {
     name: mode,
-    mode: isDevMode ? "production" : "development",
+    mode: isDevMode ? "development" : "production",
     target: isServer ? "node" : "web",
     node: isServer ? false : undefined,
     watch: isDevMode,

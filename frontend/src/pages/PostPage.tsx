@@ -69,7 +69,7 @@ export default function Post(): ReactElement {
         <meta property="og:article:published_time" content={data.post.createdAt} />
         <meta property="og:article:modified_time" content={data.post.lastUpdate} />
         {
-          data.post.tags?.map(tag => <meta key={tag.tag_id} property="og:tag" content={tag.name} />)
+          data.post.tags?.map(tag => <meta key={tag.tagId} property="og:tag" content={tag.name} />)
         }
         <meta property="description" content={post.summary} />
         <title>{post.title} - 제덮 블로그</title>

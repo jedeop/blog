@@ -38,7 +38,7 @@ export default function TagInput({tags, setTags}: TagInputProps): ReactElement {
   return (
     <div>
       <AddTag>
-        <BaseInput type="text" value={tagInput} onChange={setTagInput} placeholder="새로운 태그를 입력하세요" />
+        <BaseInput type="text" value={tagInput} onChange={setTagInput} placeholder="새로운 태그를 입력하세요" label="새로운 태그" />
         <BaseButton value="추가하기" onClick={addTagHandler} />
       </AddTag>
       <Tags>

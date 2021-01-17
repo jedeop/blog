@@ -11,17 +11,18 @@ const StyledInput = styled.input`
 
 interface BaseInputProps {
   type: string,
+  label: string,
   placeholder?: string,
   maxLength?: number,
   value: string,
   onChange: (value: string) => void,
 }
-export default function BaseInput({ type, placeholder, maxLength, value, onChange }: BaseInputProps): ReactElement {
+export default function BaseInput({ type, label, placeholder, maxLength, value, onChange }: BaseInputProps): ReactElement {
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     onChange(event.target.value);
   }
   return (
-    <StyledInput type={type} placeholder={placeholder} maxLength={maxLength}
+    <StyledInput type={type} aria-label={label} placeholder={placeholder} maxLength={maxLength}
       value={value} onChange={handleChange} />
   );
 }
