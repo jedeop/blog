@@ -31,7 +31,7 @@ services:
     container_name: proxy
     restart: always
     ports:
-      - 443:443
+      - 8443:8443
     secrets:
       - tls-pem
       - tls-key
