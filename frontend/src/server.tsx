@@ -1,6 +1,6 @@
 import Koa from "koa";
 import mount from "koa-mount";
-import koaStatic from "koa-static";
+import serve from "koa-static";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { ServerStyleSheet } from "styled-components";
@@ -23,8 +23,9 @@ const webStats = path.resolve(
   "../../dist/client/loadable-stats.json",
 );
 
-app.use(mount("/dist", koaStatic("dist/client")));
-app.use(mount("/dist/fonts", koaStatic("dist/Web")));
+app.use(mount("/dist", serve("dist/client")));
+app.use(mount("/dist/fonts", serve("dist/Web")));
+app.use(mount("/", serve("src/public")));
 
 app.use(async ctx => {
   const client = new ApolloClient({
@@ -40,7 +41,8 @@ app.use(async ctx => {
     cache: ApolloCache(),
   });
   const context: {
-    url?: string
+    url?: string,
+    statusCode?: number,
   } = {};
 
   const webExtractor = new ChunkExtractor({ statsFile: webStats });
@@ -64,10 +66,10 @@ app.use(async ctx => {
 
   const html = `
       <!doctype html>
-      <html ${helmet.htmlAttributes.toString()}>
+      <html lang="ko" ${helmet.htmlAttributes.toString()}>
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
             ${helmet.title.toString()}
             ${helmet.meta.toString()}
             ${helmet.link.toString()}
@@ -75,14 +77,20 @@ app.use(async ctx => {
             ${sheet.getStyleTags()}
         </head>
         <body ${helmet.bodyAttributes.toString()}>
+          <noscript>
+            이 웹사이트를 사용하기 위해서는 JavaScript를 허용해야합니다.
+          </noscript>
           <div id="root">${content}</div>
-          <script type="text/javascript">window.__APOLLO_STATE__=${JSON.stringify(initialState).replace(/</g, "\\u003c")};</script>
+          <script>window.__APOLLO_STATE__=${JSON.stringify(initialState).replace(/</g, "\\u003c")};</script>
           ${webExtractor.getScriptTags()}
         </body>
     </html>
   `;
   ctx.set("Content-Type", "text/html");
   ctx.body = html;
+  if (context.statusCode === 404) {
+    ctx.status = 404;
+  }
 });
 
 app.listen(3000);

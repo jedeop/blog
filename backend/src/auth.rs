@@ -32,11 +32,11 @@ pub mod google_oauth2 {
         scope: Vec<&'static str>,
     }
     impl Client {
-        pub fn new(client_id: String, client_secret: String, base_redirect_uri: String) -> Self {
+        pub fn new(client_id: String, client_secret: String, domain: String) -> Self {
             Self {
                 client_id,
                 client_secret,
-                redirect_uri: format!("{}/google", base_redirect_uri),
+                redirect_uri: format!("{}/api/oauth2callback/google", domain),
                 scope: vec!["openid", "profile"],
             }
         }

@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import GlobalStyle from "@/styles/global";
 import Header from "./components/header";
+import NotFound from "./components/error/notFound";
 
 const HomePage = loadable(() => import("@/pages/HomePage"));
 const PostPage = loadable(() => import("@/pages/PostPage"));
@@ -24,8 +25,11 @@ export default function App(): ReactElement {
       <GlobalStyle />
       <Helmet>
         <title>제덮 블로그</title>
-        <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="/dist/fonts/css/ibm-plex-sans-kr.min.css"/>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="제덮 블로그" />
+        <meta property="og:locale" content="ko_KR" />
       </Helmet>
       <Header />
       <main>
@@ -43,6 +47,12 @@ export default function App(): ReactElement {
           <Route exact path="/login">
             <LoginPage />
           </Route>
+          <Route
+            render={({ staticContext }) => {
+              if (staticContext) staticContext.statusCode = 404;
+              return <NotFound />;
+            }}
+          />
         </Switch>
       </main>
       <footer>

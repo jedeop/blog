@@ -40,7 +40,7 @@ async fn main() -> anyhow::Result<()> {
         auth: google_oauth2::Client::new(
             env::var("GOOGLE_CLIENT_ID")?,
             env::var("GOOGLE_CLIENT_SECRET")?,
-            env::var("OAUTH2_REDIRECT_URI")?,
+            env::var("DOMAIN")?,
         ),
     });
 
