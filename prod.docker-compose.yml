@@ -1,9 +1,10 @@
-version: "3"
+version: "3.8"
 services:
   frontend:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
+    image: jedeop/blog_frontend
     container_name: frontend
     restart: always
     environment: 
@@ -15,6 +16,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: jedeop/blog_backend
     container_name: backend
     restart: always
     env_file: 
@@ -25,6 +27,7 @@ services:
 
   proxy:
     build: ./proxy
+    image: jedeop/blog_proxy
     container_name: proxy
     restart: always
     ports:
@@ -35,6 +38,7 @@ services:
 
   db:
     build: ./db
+    image: jedeop/blog_db
     container_name: db
     restart: always
     env_file: 
@@ -51,5 +55,5 @@ secrets:
   tls-pem: 
     file: ./proxy/tls/server.pem
   tls-key: 
-    file: ./proxy/tls/server.key
+    file: ./proxy/tls/server.key.pem
     
