@@ -33,8 +33,8 @@ services:
     ports:
       - 8443:8443
     secrets:
-      - tls-pem
-      - tls-key
+      - tls-cert
+      - tls-priv-cert
 
   db:
     build: ./db
@@ -52,8 +52,8 @@ volumes:
   db-data: {}
   
 secrets:
-  tls-pem: 
-    file: ./proxy/tls/server.pem
-  tls-key: 
-    file: ./proxy/tls/server.key.pem
+  tls-cert: 
+    file: /etc/letsencrypt/live/blog.jedeop.dev/fullchain.pem
+  tls-priv-cert: 
+    file: /etc/letsencrypt/live/blog.jedeop.dev/privkey.pem
     
