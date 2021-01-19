@@ -3,10 +3,10 @@ import React, { ReactElement } from "react";
 interface LogoProps {
   width?: number,
   height?: number,
-  color?: string,
+  color: string,
 }
 
-export default function Logo({ width, height, color = "#FFFFFF" }: LogoProps): ReactElement {
+export default function Logo({ width, height, color }: LogoProps): ReactElement {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" 
       width={width ? width : undefined}

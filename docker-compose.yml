@@ -32,10 +32,10 @@ services:
     container_name: proxy
     restart: on-failure
     ports:
-      - 443:443
+      - 443:8443
     secrets:
-      - tls-pem
-      - tls-key
+      - tls-cert
+      - tls-priv-cert
 
   db:
     build: ./db
@@ -52,8 +52,8 @@ volumes:
   db-data: {}
   
 secrets:
-  tls-pem: 
+  tls-cert: 
     file: ./proxy/tls/server.pem
-  tls-key: 
-    file: ./proxy/tls/server.key
+  tls-priv-cert: 
+    file: ./proxy/tls/server.key.pem
     

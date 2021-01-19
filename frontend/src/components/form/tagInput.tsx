@@ -7,18 +7,18 @@ const AddTag = styled.div`
   display: flex;
 `;
 const Tags = styled.div`
-  background-color: hsl(0, 0%, 97%);
+  background-color: ${props => props.theme.formBase};
 `;
 const Tag = styled.span`
   padding: 0px 10px;
   cursor: pointer;
   :hover {
-    background-color: hsl(0, 0%, 87%);
+    background-color: ${props => props.theme.formActive};
   }
 `;
 const NoTag = styled.span`
   font-style: italic;
-  color: hsl(0, 0%, 30%);
+  color: ${props => props.theme.fg1};
 `;
 
 interface TagInputProps {

@@ -44,7 +44,6 @@ interface GetPostVariable {
 
 const Container = styled.article`
   ${BaseContainer}
-  background-color: white;
   padding: 10px;
 `;
 
@@ -71,7 +70,7 @@ export default function Post(): ReactElement {
         {
           data.post.tags?.map(tag => <meta key={tag.tagId} property="og:tag" content={tag.name} />)
         }
-        <meta property="description" content={post.summary} />
+        <meta name="description" content={post.summary} />
         <title>{post.title} - 제덮 블로그</title>
       </Helmet>
       <Container>

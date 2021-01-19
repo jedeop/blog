@@ -7,7 +7,7 @@ const Container = styled.div`
   display: flex;
   > a {
     margin-left: 10px;
-    color: hsl(0, 0%, 60%);
+    color: ${props => props.theme.fg3};
     transition: color .3s;
     :hover {
       color: black;

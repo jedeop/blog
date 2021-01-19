@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { DefaultTheme, withTheme } from "styled-components";
 import Logo from "./logo";
 import { Edit3, LogIn, LogOut } from "react-feather";
 import { gql, useQuery } from "@apollo/client";
@@ -19,10 +19,10 @@ interface IsLoginedData {
 
 const Container = styled.header`
   padding: 5px 15px;
-  background: linear-gradient(272deg, #61CDB7 0%, #24B799 100%);
+  background: linear-gradient(272deg, ${props => props.theme.primary} 0%, ${props => props.theme.primaryDark} 100%);
   font-size: 25px;
   font-weight: bold;
-  color: white;
+  color: ${props => props.theme.bg};
 
   display: flex;
 `;
@@ -45,12 +45,16 @@ const RightA = styled.a`
   margin: 0px 5px;
 `;
 
-export default function Header(): ReactElement {
+interface HeaderProps {
+  theme: DefaultTheme,
+}
+
+function Header({ theme }: HeaderProps): ReactElement {
   const { loading, error, data } = useQuery<IsLoginedData>(IS_LOGINED);
   return (
     <Container>
       <LeftLink to="/">
-        <Logo width={100} />
+        <Logo width={100} color={theme.bg} />
         <Title>블로그</Title>
       </LeftLink>
       {
@@ -80,3 +84,5 @@ export default function Header(): ReactElement {
     </Container>
   );
 }
+
+export default withTheme(Header);
