@@ -10,7 +10,7 @@ const Container = styled.div`
     color: ${props => props.theme.fg3};
     transition: color .3s;
     :hover {
-      color: black;
+      color: ${props => props.theme.fg};
     }
   }
   justify-content: flex-end;

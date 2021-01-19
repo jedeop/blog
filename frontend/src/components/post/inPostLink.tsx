@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-const Background = styled.div`
+const Background = styled.span`
   position: absolute;
   width: 100%;
   height: 10%;
