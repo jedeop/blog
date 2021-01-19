@@ -5,9 +5,9 @@ export const LightTheme: DefaultTheme = {
   primaryDark: "#24B799",
 
   fg: "#000000",
-  fg1: "hsl(0, 0%, 45%)",
-  fg2: "hsl(0, 0%, 55%)",
-  fg3: "hsl(0, 0%, 60%)",
+  fg1: "hsl(0, 0%, 40%)",
+  fg2: "hsl(0, 0%, 45%)",
+  fg3: "hsl(0, 0%, 50%)",
 
   bg: "#FFFFFF",
   bg1: "hsl(0, 0%, 90%)",
@@ -22,9 +22,9 @@ export const DarkTheme: DefaultTheme = {
   primaryDark: "#399280",
 
   fg: "#FFFFFF",
-  fg1: "hsl(0, 0%, 45%)",
-  fg2: "hsl(0, 0%, 50%)",
-  fg3: "hsl(0, 0%, 55%)",
+  fg1: "hsl(0, 0%, 60%)",
+  fg2: "hsl(0, 0%, 55%)",
+  fg3: "hsl(0, 0%, 50%)",
 
   bg: "#111111",
   bg1: "hsl(0, 0%, 10%)",
