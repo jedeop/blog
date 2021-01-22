@@ -2,7 +2,7 @@ import React, {ReactElement} from "react";
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import github from "react-syntax-highlighter/dist/cjs/styles/hljs/github";
 import gfm from "remark-gfm";
 import InPostLink from "./inPostLink";
 import Heading, { slugger } from "./heading";
