@@ -31,8 +31,8 @@ const GlobalStyle = createGlobalStyle`
     --primary-dark-color: hsl(168, 52%, 47%);
 
     --fg-color: #000000;
-    --fg1-color: hsl(0, 0%, 40%);
-    --fg2-color: hsl(0, 0%, 50%);
+    --fg1-color: hsl(0, 0%, 30%);
+    --fg2-color: hsl(0, 0%, 40%);
 
     --bg-color: #FFFFFF;
     --bg1-color: hsl(0, 0%, 90%);

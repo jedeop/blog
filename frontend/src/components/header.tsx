@@ -60,19 +60,19 @@ export default function Header(): ReactElement {
               <>
                 {
                   data.isOwner ? (
-                    <RightLink to="/write">
+                    <RightLink to="/write" title="글 작성">
                       <Edit3 size={25} />
                     </RightLink>
                   )
                     : <div></div>
                 }
-                <RightA href="/api/logout">
+                <RightA href="/api/logout" title="로그아웃">
                   <LogOut size={25} />
                 </RightA>
               </>
             )
               : (
-                <RightLink to="/login">
+                <RightLink to="/login" title="로그인">
                   <LogIn size={25} />
                 </RightLink>
               )
