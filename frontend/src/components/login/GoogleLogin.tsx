@@ -8,10 +8,10 @@ const Login = styled.a`
   align-items: center;
   padding: 9.6px;
   height: 48px;
-  border: 1px solid ${props => props.theme.bg2};
+  border: 1px solid var(--bg2-color);
   transition: box-shadow .3s;
   :hover {
-    box-shadow: ${props => props.theme.bg2} 0px 0px 10px 0px;
+    box-shadow: var(--bg2-color) 0px 0px 10px 0px;
   }
 `;
 const Text = styled.div`
@@ -19,7 +19,7 @@ const Text = styled.div`
   margin-left: 28.8px;
   margin-right: 15px;
   font-size: 16.8px;
-  color: ${props => props.theme.fg1};
+  color: var(--fg1-color);
 `;
 
 export default function GoogleLogin(): ReactElement {

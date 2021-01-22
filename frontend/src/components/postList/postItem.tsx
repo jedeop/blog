@@ -17,17 +17,17 @@ const Title = styled.div`
 `;
 const Hr = styled.div`
   margin: 5px 0px;
-  border-top: 1px solid ${props => props.theme.bg2};
+  border-top: 1px solid var(--bg2-color);
 `;
 const Summary = styled.div`
   font-size: 18px;
-  color: ${props => props.theme.fg1};
+  color: var(--fg1-color);
 `;
 const Meta = styled.div`
   font-size: 16px;
   font-weight: 300;
   margin-top: 5px;
-  color: ${props => props.theme.fg2};
+  color: var(--fg2-color);
   display: flex;
   flex-wrap: wrap;
 `;

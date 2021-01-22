@@ -4,9 +4,9 @@ import styled from "styled-components";
 const StyledTextArea = styled.textarea`
   border: none;
   margin: 0px;
-  background-color: ${props => props.theme.formBase};
+  background-color: var(--formBase-color);
   :focus {
-    background-color: ${props => props.theme.formFocus};
+    background-color: var(--formFocus-color);
   }
 `;
 

@@ -3,16 +3,16 @@ import styled, { css } from "styled-components";
 
 const StyledButton = styled.input<{ active: boolean }>`
   border: none;
-  background-color: ${props => props.theme.formBase};
+  background-color: var(--formBase-color);
   margin: 0px; 
   font-size: 16px;
   width: unset !important;
   border-radius: 0px;
   :hover {
-    background-color: ${props => props.theme.formFocus};
+    background-color: var(--formFocus-color);
   }
   ${props => props.active && css`
-    background-color: ${props => props.theme.formActive};
+    background-color: var(--formActive-color);
   `}
 `;
 

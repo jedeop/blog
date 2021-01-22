@@ -7,10 +7,10 @@ const Container = styled.div`
   display: flex;
   > a {
     margin-left: 10px;
-    color: ${props => props.theme.fg3};
+    color: var(--fg2-color);
     transition: color .3s;
     :hover {
-      color: ${props => props.theme.fg};
+      color: var(--fg-color);
     }
   }
   justify-content: flex-end;

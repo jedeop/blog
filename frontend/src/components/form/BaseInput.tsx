@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 const StyledInput = styled.input`
   border: none;
-  background-color: ${props => props.theme.formBase};
+  background-color: var(--formBase-color);
   :focus {
-    background-color: ${props => props.theme.formFocus};
+    background-color: var(--formFocus-color);
   }
 `;
 

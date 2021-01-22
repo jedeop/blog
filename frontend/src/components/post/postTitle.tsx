@@ -13,14 +13,14 @@ const Title = styled.div`
 `;
 const Summary = styled.div`
   font-size: 22px;
-  color: ${props => props.theme.fg1};
+  color: var(--fg1-color);
   font-weight: 300;
   line-height: 1;
 `;
 const Meta = styled.div`
   display: flex;
   font-size: 16px;
-  color: ${props => props.theme.fg2};
+  color: var(--fg2-color);
   justify-content: space-between;
   margin-top: 5px;
 `;
@@ -32,13 +32,13 @@ const StyledClock = styled(Clock)`
   margin-right: 5px;
 `;
 const Hr = styled.div`
-  border-top: 2px solid ${props => props.theme.bg2};
+  border-top: 2px solid var(--bg2-color);
   margin: 10px 0px;
 `;
 const TagsContainer = styled.div`
   display: flex;
   font-weight: 300;
-  color: ${props => props.theme.fg3};
+  color: var(--fg2-color);
   > div {
     margin-right: 5px;
   }
