@@ -47,7 +47,7 @@ export default function App(): ReactElement {
         <GlobalStyle />
         <Helmet>
           <title>제덮 블로그</title>
-          <link rel="stylesheet" href="/dist/fonts/css/ibm-plex-sans-kr.min.css"/>
+          <link rel="stylesheet" href="/fonts/css/ibm-plex-sans-kr.min.css"/>
           <link rel="icon" type="image/png" href="/favicon.png" />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="제덮 블로그" />

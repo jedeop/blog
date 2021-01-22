@@ -7,6 +7,8 @@ services:
     image: jedeop/blog_frontend
     container_name: frontend
     restart: always
+    volumes: 
+      - frontend-dist:/app/dist/client
     environment: 
       BACKEND_URL: http://backend:7878/api/graphql
     expose: 
@@ -32,6 +34,8 @@ services:
     restart: always
     ports:
       - 8443:8443
+    volumes: 
+      - frontend-dist:/data/dist
     secrets:
       - tls-cert
       - tls-priv-cert
@@ -50,6 +54,7 @@ services:
         
 volumes: 
   db-data: {}
+  frontend-dist: {}
   
 secrets:
   tls-cert: 

@@ -1,6 +1,4 @@
 import Koa from "koa";
-import mount from "koa-mount";
-import serve from "koa-static";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { ServerStyleSheet } from "styled-components";
@@ -22,10 +20,6 @@ const webStats = path.resolve(
   __dirname,
   "../../dist/client/loadable-stats.json",
 );
-
-app.use(mount("/dist", serve("dist/client")));
-app.use(mount("/dist/fonts", serve("dist/Web")));
-app.use(mount("/", serve("src/public")));
 
 app.use(async ctx => {
   const client = new ApolloClient({
