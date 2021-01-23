@@ -20,6 +20,7 @@ query GetPosts ($cursor: String) {
           tagId
           name
         }
+        isPublished
       }
       cursor
     }

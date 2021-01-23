@@ -29,6 +29,7 @@ export default function WritePage (): ReactElement {
   const [summary, setSummary] = useState("");
   const [contents, setContents] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [isPublished, setIsPublished] = useState(false);
 
   return (
     <PostForm onSubmit={
@@ -42,6 +43,7 @@ export default function WritePage (): ReactElement {
               summary,
               contents,
               tags,
+              isPublished,
               // TODO: seriesId
             }
           }
@@ -54,6 +56,7 @@ export default function WritePage (): ReactElement {
     summary={[summary, setSummary]}
     contents={[contents, setContents]}
     tags={[tags, setTags]}
+    isPublished={[isPublished, setIsPublished]}
     />
 
   );

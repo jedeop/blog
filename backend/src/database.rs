@@ -45,6 +45,25 @@ impl Database {
         let posts: Vec<Post> = sqlx::query_as::<_, Post>(
             "SELECT *
             FROM post
+            WHERE created_at < $1 AND is_published
+            ORDER BY created_at DESC
+            LIMIT $2",
+        )
+        .bind(after)
+        .bind(first + 1)
+        .fetch_all(&self.pool)
+        .await?;
+
+        Ok(posts)
+    }
+    pub async fn get_posts_all(
+        &self,
+        first: u32,
+        after: chrono::DateTime<FixedOffset>,
+    ) -> Result<Vec<Post>> {
+        let posts: Vec<Post> = sqlx::query_as::<_, Post>(
+            "SELECT *
+            FROM post
             WHERE created_at < $1
             ORDER BY created_at DESC
             LIMIT $2",
@@ -69,14 +88,15 @@ impl Database {
         };
         let new_post: Post = sqlx::query_as::<_, Post>(
             "INSERT INTO
-            post (title, summary, contents, tags, series_id)
-            VALUES ($1, $2, $3, $4, $5)
+            post (title, summary, contents, tags, is_published, series_id)
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *",
         )
         .bind(post.title)
         .bind(post.summary)
         .bind(post.contents)
         .bind(tag_ids)
+        .bind(post.is_published)
         .bind(post.series_id)
         .fetch_one(&self.pool)
         .await?;
@@ -100,7 +120,8 @@ impl Database {
                 summary = COALESCE($3, post.summary),
                 contents = COALESCE($4, post.contents),
                 tags = COALESCE($5, post.tags),
-                series_id = COALESCE($6, post.series_id)
+                is_published = COALESCE($6, post.is_published),
+                series_id = COALESCE($7, post.series_id)
             WHERE post_id = $1
             RETURNING *;",
         )
@@ -109,6 +130,7 @@ impl Database {
         .bind(&post_input.summary)
         .bind(&post_input.contents)
         .bind(&tag_ids)
+        .bind(&post_input.is_published)
         .bind(&post_input.series_id)
         .fetch_one(&self.pool)
         .await?;

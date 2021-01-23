@@ -4,7 +4,7 @@ import { parseISO, formatDistanceToNow } from "date-fns";
 import koLocale from "date-fns/locale/ko";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-import { Clock, Calendar } from "react-feather";
+import { Clock, Calendar, Lock } from "react-feather";
 import Tags from "./tags";
 
 const Main = styled.div`
@@ -45,17 +45,27 @@ const StyledClock = styled(Clock)`
 const StyledCalendar = styled(Calendar)`
   ${styledIcon}
 `;
+const StyledLock = styled(Lock)`
+  ${styledIcon}
+`;
 
 interface PostItemProps {
   post: PostForList
 }
 export default function PostItem({ post }: PostItemProps): ReactElement {
-  const { title, summary, readTime, createdAt, tags, postId } = post;
+  const { title, summary, readTime, createdAt, tags, isPublished, postId } = post;
 
   return (
     <Main>
       <Link to={`/post/${postId}`} >
-        <Title>{title}</Title>
+        <Title>
+          {
+            isPublished
+              ? null
+              : <StyledLock size={20} />
+          }
+          {title}
+        </Title>
         <Hr />
         <Summary>{summary}</Summary>
         <Meta>

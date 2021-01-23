@@ -20,6 +20,15 @@ impl QueryRoot {
 
         let post = db.get_post_by_id(post_id).await?;
 
+        let user = ctx.data::<Option<User>>()?;
+        let is_owner = match user {
+            Some(user) => user.is_owner(),
+            None => false,
+        };
+        if !is_owner && !post.is_published {
+            return Err("Forbidden".into());
+        }
+
         Ok(post)
     }
 
@@ -29,6 +38,12 @@ impl QueryRoot {
         first: Option<u32>,
         after: Option<String>,
     ) -> FieldResult<PostConnection> {
+        let user = ctx.data::<Option<User>>()?;
+        let is_owner = match user {
+            Some(user) => user.is_owner(),
+            None => false,
+        };
+
         let db = ctx.data::<Arc<Database>>()?;
 
         let first = first.unwrap_or(10);
@@ -41,7 +56,7 @@ impl QueryRoot {
         };
         let after = DateTime::parse_from_rfc3339(&after)?;
 
-        let post_connection = PostConnection::new(&db, first, after).await?;
+        let post_connection = PostConnection::new(&db, first, after, is_owner).await?;
 
         Ok(post_connection)
     }

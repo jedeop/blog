@@ -7,6 +7,7 @@ export interface PostForList {
   createdAt: string,
   readTime: number,
   tags?: Tag[],
+  isPublished: boolean,
 }
 
 export interface Post {
@@ -25,6 +26,7 @@ export interface PostInput {
   summary?: string,
   contents: string,
   tags?: string[],
+  isPublished: boolean,
   seriesId?: string,
 }
 
@@ -33,5 +35,6 @@ export interface PostForUpdate {
   summary?: string,
   contents: string,
   tags?: TagSimple[],
+  isPublished: boolean,
   seriesId?: string,
 }

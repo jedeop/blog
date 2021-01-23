@@ -7,6 +7,7 @@ import BaseButton from "./BaseButton";
 import BaseInput from "./BaseInput";
 import BaseTextArea from "./BaseTextArea";
 import TagInput from "./tagInput";
+import BaseRadio from "./BaseRadio";
 
 const Container = styled.div`
   ${BaseContainer}
@@ -31,6 +32,7 @@ interface PostFormProps {
   summary: [string, (value: string) => void],
   contents: [string, (value: string) => void],
   tags: [string[], (value: string[]) => void],
+  isPublished: [boolean, (value: boolean) => void],
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
 }
 
@@ -39,8 +41,12 @@ export default function PostForm({
   summary: [summary, setSummary],
   contents: [contents, setContents],
   tags: [tags, setTags],
+  isPublished: [isPublished, setIsPublished],
   onSubmit
 }: PostFormProps): ReactElement {
+  function handleIsPublished(val: string) {
+    setIsPublished(val == "true");
+  }
   return (
     <Container>
       <form method="post"
@@ -61,6 +67,8 @@ export default function PostForm({
             }
           ]} 
         />
+        <BaseRadio label="공개" name="isPublished" value="true" checked={String(isPublished)} onChange={handleIsPublished} />
+        <BaseRadio label="비공개" name="isPublished" value="false" checked={String(isPublished)} onChange={handleIsPublished} />
         <BaseButton type="submit" value="저장하기" onClick={() => null} />
       </form>
     </Container>

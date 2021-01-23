@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS post (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   last_update TIMESTAMPTZ,
   tags UUID [],
+  is_published BOOLEAN NOT NULL,
   series_id UUID,
   FOREIGN KEY(series_id) 
     REFERENCES series(series_id)

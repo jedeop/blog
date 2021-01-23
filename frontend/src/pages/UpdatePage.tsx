@@ -14,6 +14,7 @@ const GET_POST = gql`
       tags {
         name
       }
+      isPublished
     }
   }
 `;
@@ -56,6 +57,7 @@ export default function WritePage (): ReactElement {
   const [summary, setSummary] = useState("");
   const [contents, setContents] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [isPublished, setIsPublished] = useState(false);
 
   const { loading, error, data } = useQuery<GetPostData, GetPostVariable>(GET_POST, { variables: { postId: postId } });
   if (loading) return <Loading />;
@@ -65,6 +67,7 @@ export default function WritePage (): ReactElement {
     setSummary(data.post.summary || "");
     setContents(data.post.contents);
     setTags(data.post.tags?.map(tag => tag.name) || []);
+    setIsPublished(data.post.isPublished);
     setIsInited(true);
   }
 
@@ -81,6 +84,7 @@ export default function WritePage (): ReactElement {
               summary,
               contents,
               tags,
+              isPublished,
               // TODO: seriesId
             }
           }
@@ -93,6 +97,7 @@ export default function WritePage (): ReactElement {
     summary={[summary, setSummary]}
     contents={[contents, setContents]}
     tags={[tags, setTags]}
+    isPublished={[isPublished, setIsPublished]}
     />
 
   );
