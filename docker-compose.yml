@@ -8,7 +8,11 @@ services:
     restart: on-failure
     volumes: 
       - ./frontend/src/:/app/src/
-      - frontend-dist:/app/dist/client
+      - type: volume
+        source: frontend-dist
+        target: /app/dist/client
+        volume:
+          nocopy: false
     environment: 
       BACKEND_URL: http://backend:7878/api/graphql
     expose: 
@@ -35,7 +39,7 @@ services:
     ports:
       - 443:8443
     volumes: 
-      - frontend-dist:/data/dist
+      - frontend-dist:/data/dist:ro
     secrets:
       - tls-cert
       - tls-priv-cert
