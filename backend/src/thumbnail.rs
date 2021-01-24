@@ -80,9 +80,11 @@ impl Thumbnail {
     }
 
     pub async fn route(req: Request<Context>) -> tide::Result {
+        let db = &req.state().db;
+
         let post_id = Uuid::parse_str(req.param("post_id")?)?;
 
-        let post = req.state().db.get_post_by_id(post_id).await?;
+        let post = db.get_post_by_id(post_id).await?;
 
         let Post {
             title,
@@ -94,9 +96,7 @@ impl Thumbnail {
         } = post;
 
         let tags = match tags {
-            Some(tags) => req
-                .state()
-                .db
+            Some(tags) => db
                 .get_tags(&tags)
                 .await?
                 .into_iter()

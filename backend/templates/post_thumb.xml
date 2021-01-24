@@ -5,45 +5,53 @@
   <path d="M19.506 190.5L293.423 0h45.244v190.5z" fill="#4ac3ae"/>
   <path d="M49.423 190.5L338.667 32.147V190.5z" fill="#61cdb7"/>
   {# title #}
-  <text y="22.367" x="9.905" style="line-height:1.25" font-weight="400" font-size="15.875" font-family="sans-serif" stroke-width=".265">
+  <text y="27.367" x="14.825" style="line-height:1.25" font-weight="400" font-size="15.875" font-family="sans-serif" stroke-width=".265">
     {% for line in title %}
-      <tspan x="9.905" y="{{ 22 + 20 * loop.index0 }}.367" style="-inkscape-font-specification:'IBM Plex Sans KR Bold'" font-weight="700" font-family="IBM Plex Sans KR">{{ line }}</tspan>
+      <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Bold'" y="{{ 27 + 20 * loop.index0 }}.367" x="14.825" font-weight="700" font-family="IBM Plex Sans KR">
+        {{ line }}
+      </tspan>
     {% endfor %}
   </text>
   {# summary #}
-  <text style="line-height:1.25" x="9.333" y="58.128" font-weight="400" font-size="12.347" font-family="sans-serif" stroke-width=".265">
+  <text style="line-height:1.25" x="14.148" y="61.446" font-weight="400" font-size="12.347" font-family="sans-serif" stroke-width=".265">
     {% for line in summary %}
-      <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="{{ 58 + 16 * loop.index0 }}.128" x="9.333" font-weight="300" font-family="IBM Plex Sans KR">{{ line }}</tspan>
+      <tspan x="14.148" y="{{ 61 + 16 * loop.index0 }}.446" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">
+        {{ line }}
+      </tspan>
     {% endfor %}
   </text>
   {# tag #}
-  <text y="154.187" x="9.302" style="line-height:1.25" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265">
-    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="154.187" x="9.302" font-weight="300" font-family="IBM Plex Sans KR">
-      {% for tag in tags %} 
-        #{{ tag }} 
-      {% endfor %}
+  <text y="149.425" x="14.1" style="line-height:1.25" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265">
+    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="149.425" x="14.1" font-weight="300" font-family="IBM Plex Sans KR">
+      {% for tag in tags %}
+        #{{ tag }}
+      {% endfor %} 
     </tspan>
   </text>
-  <g transform="matrix(.5 0 0 .5 9 159.308)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(.5 0 0 .5 14 156.383)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect ry="2" rx="2" height="18" width="18" y="4" x="3"/>
     <path d="M16 2v4M8 2v4M3 10h18"/>
   </g>
-  <g transform="matrix(.5 0 0 .5 86.333 159.808)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(.5 0 0 .5 91.333 156.683)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle r="10" cy="12" cx="12"/>
     <path d="M12 6v6l4 2"/>
   </g>
   {# date #}
-  <text y="97.514" x="224.228" style="line-height:1.25" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -200.624 71.807)">
-    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="97.514" x="224.228" font-weight="300" font-family="IBM Plex Sans KR">{{ date }}</tspan>
+  <text y="96.288" x="224.228" style="line-height:1.25" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -195.624 69.69)">
+    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="96.288" x="224.228" font-weight="300" font-family="IBM Plex Sans KR">
+      {{ date }}
+    </tspan>
   </text>
   {# read time #}
-  <text style="line-height:1.25" x="300.891" y="97.937" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -200.624 71.807)">
-    <tspan x="300.891" y="97.937" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">{{ read_time }}분</tspan>
+  <text style="line-height:1.25" x="300.891" y="96.288" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -195.624 69.69)">
+    <tspan x="300.891" y="96.288" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">
+      {{ read_time }}분
+    </tspan>
   </text>
   {# license #}
-  <text style="line-height:1.25" x="9.682" y="182.281" font-weight="400" font-size="5.997" font-family="sans-serif" stroke-width=".265">
-    <tspan x="9.682" y="182.281" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">© Font: IBM Plex Sans KR, Icon: feather by @colebemis</tspan>
+  <text style="line-height:1.25" x="14.73" y="179.599" font-weight="400" font-size="5.997" font-family="sans-serif" stroke-width=".265">
+    <tspan x="14.73" y="179.599" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">© Font: IBM Plex Sans KR, Icon: feather by @colebemis</tspan>
   </text>
   {# logo #}
-  <path d="M264.395 164.835v4.29h5.801l-7.16 12.406h6.296l4.722-8.209 1.728-3.734 1.45 3.086 4.475 8.857h47.182v-4.354h-3.32l.563-6.547h-4.918l-.563 6.547h-5.106l.564-6.547h-4.918l-.564 6.547h-19.58v-8.019h37.842v-4.323h-42.916zm16.201 4.29h5.377v10.293z" fill="#fff"/>
+  <path d="M261.22 161.66v4.29h5.801l-7.16 12.405h6.296l4.722-8.208 1.728-3.734 1.45 3.086 4.475 8.856h47.182v-4.353h-3.32l.563-6.547h-4.918l-.563 6.547h-5.106l.564-6.547h-4.918l-.564 6.547h-19.58v-8.019h37.842v-4.323h-42.916zm16.201 4.29h5.377v10.293z" fill="#fff"/>
 </svg>

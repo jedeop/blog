@@ -71,7 +71,8 @@ export default function Post(): ReactElement {
           data.post.tags?.map(tag => <meta key={tag.tagId} property="og:tag" content={tag.name} />)
         }
         <meta name="description" content={post.summary} />
-        <title>{post.title} - 제덮 블로그</title>
+        <meta name="twitter:card" content="summary_large_image" />
+        <title>{post.title} | 제덮 블로그</title>
       </Helmet>
       <Container>
         <PostTitle title={post.title} summary={post.summary} createdAt={post.createdAt} readTime={post.readTime} tags={post.tags} />
