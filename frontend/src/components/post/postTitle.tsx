@@ -7,9 +7,10 @@ import { Tag } from "@/types/tag";
 import Tags from "../postList/tags";
 
 const Title = styled.div`
-  font-size: 35px;
+  font-size: 40px;
   font-weight: bold;
   line-height: 1.2;
+  margin: 10px 0px;
 `;
 const Summary = styled.div`
   font-size: 22px;
@@ -32,7 +33,7 @@ const StyledClock = styled(Clock)`
   margin-right: 5px;
 `;
 const Hr = styled.div`
-  border-top: 2px solid var(--bg2-color);
+  border-top: 1px solid var(--bg2-color);
   margin: 10px 0px;
 `;
 const TagsContainer = styled.div`
