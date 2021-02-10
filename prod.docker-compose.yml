@@ -43,6 +43,7 @@ services:
     secrets:
       - tls-cert
       - tls-priv-cert
+      - tls-chain
 
   db:
     build: ./db
@@ -65,4 +66,5 @@ secrets:
     file: /etc/letsencrypt/live/blog.jedeop.dev/fullchain.pem
   tls-priv-cert: 
     file: /etc/letsencrypt/live/blog.jedeop.dev/privkey.pem
-    
+  tls-chain: 
+    file: /etc/letsencrypt/live/blog.jedeop.dev/chain.pem

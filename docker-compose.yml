@@ -43,6 +43,7 @@ services:
     secrets:
       - tls-cert
       - tls-priv-cert
+      - tls-chain
 
   db:
     build: ./db
@@ -61,7 +62,8 @@ volumes:
   
 secrets:
   tls-cert: 
-    file: ./proxy/tls/server.pem
+    file: ./proxy/tls/localhost.crt
   tls-priv-cert: 
-    file: ./proxy/tls/server.key.pem
-    
+    file: ./proxy/tls/localhost.key
+  tls-chain: 
+    file: ./proxy/tls/localhost.crt
