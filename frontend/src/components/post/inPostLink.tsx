@@ -6,7 +6,7 @@ const Background = styled.span`
   position: absolute;
   width: 100%;
   height: 10%;
-  background-color: var(--primary-color);
+  background-color: var(--link-color);
   bottom: 0px;
   left: 0px;
   transition: background-color 0.1s ease 0s, height 0.2s cubic-bezier(.8,0,.27,1.55) 0s;
@@ -18,7 +18,7 @@ const LinkCss = css`
   z-index: 1;
   &:hover ${Background} {
     height: 90%;
-    background-color: ${props => `${props.theme.primary}80`};
+    opacity: 0.8;
   }
 `;
 const StyledLink = styled(Link)`

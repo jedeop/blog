@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --primary-color:hsl(168, 52%, 59%);
     --primary-dark-color: hsl(168, 52%, 47%);
+    --link-color: var(--primary-color);
 
     --fg-color: #000000;
     --fg1-color: hsl(0, 0%, 30%);
@@ -44,9 +45,8 @@ const GlobalStyle = createGlobalStyle`
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --primary-color: hsl(168, 52%, 39%);
-      --primary-dark-color: hsl(168, 52%, 27%);
-     
+      --link-color: var(--primary-dark-color);
+
       --fg-color: #FFFFFF;
       --fg1-color: hsl(0, 0%, 60%);
       --fg2-color: hsl(0, 0%, 50%);

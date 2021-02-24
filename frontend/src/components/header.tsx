@@ -19,10 +19,9 @@ interface IsLoginedData {
 
 const Container = styled.header`
   padding: 5px 15px;
-  background: linear-gradient(110deg, var(--primary-dark-color) 0%, var(--primary-color) 100%);
   font-size: 25px;
   font-weight: bold;
-  color: var(--bg-color);
+  color: var(--primary-color);
 
   display: flex;
 `;
