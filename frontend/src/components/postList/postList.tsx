@@ -3,7 +3,6 @@ import { PostForList } from "@/types/post";
 import PostItem from "@/components/postList/postItem";
 import { useQuery, gql } from "@apollo/client";
 import styled from "styled-components";
-import BaseContainer from "@/styles/container";
 import Loading from "../loading";
 
 const GET_POSTS = gql`
@@ -48,7 +47,6 @@ interface GetPostsVar {
 }
 
 const Container = styled.div`
-  ${BaseContainer}
   padding: 30px 10px;
 `;
 

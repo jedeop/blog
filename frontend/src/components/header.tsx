@@ -18,7 +18,7 @@ interface IsLoginedData {
 }
 
 const Container = styled.header`
-  padding: 5px 15px;
+  padding: 5px 0px;
   font-size: 25px;
   font-weight: bold;
   color: var(--primary-color);

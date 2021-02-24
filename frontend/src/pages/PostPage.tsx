@@ -4,8 +4,6 @@ import { gql, useQuery } from "@apollo/client";
 import PostTitle from "@/components/post/postTitle";
 import { Post } from "@/types/post";
 import PostContents from "@/components/post/postContents";
-import styled from "styled-components";
-import BaseContainer from "@/styles/container";
 import Loading from "@/components/loading";
 import { Helmet } from "react-helmet";
 import PostManage from "@/components/post/postManage";
@@ -41,12 +39,6 @@ interface GetPostVariable {
   id: string,
 }  
 
-
-const Container = styled.article`
-  ${BaseContainer}
-  padding: 10px;
-`;
-
 export default function Post(): ReactElement {
   const { postId } = useParams<Params>();
   const { loading, error, data } = useQuery<GetPostData, GetPostVariable>(GET_POST, { variables: { id: postId } });
@@ -74,11 +66,11 @@ export default function Post(): ReactElement {
         <meta name="twitter:card" content="summary_large_image" />
         <title>{post.title} | 제덮 블로그</title>
       </Helmet>
-      <Container>
+      <div>
         <PostTitle title={post.title} summary={post.summary} createdAt={post.createdAt} readTime={post.readTime} tags={post.tags} />
         {data.isOwner? <PostManage postId={post.postId} /> : null}
         <PostContents contents={post.contents} />
-      </Container>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import Switch from "@/components/switch";
 import styled from "styled-components";
-import BaseContainer from "@/styles/container";
 import PostContents from "../post/postContents";
 import BaseButton from "./BaseButton";
 import BaseInput from "./BaseInput";
@@ -10,7 +9,6 @@ import TagInput from "./tagInput";
 import BaseRadio from "./BaseRadio";
 
 const Container = styled.div`
-  ${BaseContainer}
   margin-top: 10px;
   
   > form > * {
