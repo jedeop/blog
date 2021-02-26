@@ -4,6 +4,7 @@ const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const LoadablePlugin = require("@loadable/webpack-plugin");
 const NodemonPlugin = require("nodemon-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const getConfig = (mode) => {
   const isDevMode = process.env.NODE_ENV !== "production";
@@ -36,8 +37,11 @@ const getConfig = (mode) => {
         "@": path.resolve(__dirname, "src")
       }
     },
-    plugins: isServer ? [new NodemonPlugin()] : [new LoadablePlugin()],
+    plugins: isServer ? [new CleanWebpackPlugin(), new NodemonPlugin()] : [new CleanWebpackPlugin(), new LoadablePlugin()],
     externals: isServer ? [nodeExternals()] : [],
+    optimization: {
+      runtimeChunk: true,
+    },
   };
 };
 
