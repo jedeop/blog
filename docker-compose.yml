@@ -9,7 +9,7 @@ services:
     volumes: 
       - ./frontend/src/:/app/src/
       - type: volume
-        source: frontend-dist
+        source: frontend_dist
         target: /app/dist/client
         volume:
           nocopy: false
@@ -35,15 +35,16 @@ services:
   proxy:
     build: ./proxy
     container_name: proxy
-    restart: on-failure
+    restart: unless-stopped
     ports:
-      - 443:8443
+      - 80:80
+      - 443:443
     volumes: 
-      - frontend-dist:/data/dist:ro
-    secrets:
-      - tls-cert
-      - tls-priv-cert
-      - tls-chain
+      - frontend_dist:/srv/dist:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment: 
+      SITE_ADDRESS: localhost
 
   db:
     build: ./db
@@ -58,12 +59,6 @@ services:
         
 volumes: 
   db-data: {}
-  frontend-dist: {}
-  
-secrets:
-  tls-cert: 
-    file: ./proxy/tls/localhost.crt
-  tls-priv-cert: 
-    file: ./proxy/tls/localhost.key
-  tls-chain: 
-    file: ./proxy/tls/localhost.crt
+  frontend_dist: {}
+  caddy_data: {}
+  caddy_config: {}

@@ -9,7 +9,7 @@ services:
     restart: always
     volumes: 
       - type: volume
-        source: frontend-dist
+        source: frontend_dist
         target: /app/dist/client
         volume:
           nocopy: false
@@ -35,15 +35,16 @@ services:
     build: ./proxy
     image: jedeop/blog_proxy
     container_name: proxy
-    restart: always
+    restart: unless-stopped
     ports:
-      - 8443:8443
+      - 80:80
+      - 443:443
     volumes: 
-      - frontend-dist:/data/dist:ro
-    secrets:
-      - tls-cert
-      - tls-priv-cert
-      - tls-chain
+      - frontend_dist:/data/dist:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      SITE_ADDRESS: blog.jedeop.dev
 
   db:
     build: ./db
@@ -59,12 +60,6 @@ services:
         
 volumes: 
   db-data: {}
-  frontend-dist: {}
-  
-secrets:
-  tls-cert: 
-    file: /etc/letsencrypt/live/blog.jedeop.dev/fullchain.pem
-  tls-priv-cert: 
-    file: /etc/letsencrypt/live/blog.jedeop.dev/privkey.pem
-  tls-chain: 
-    file: /etc/letsencrypt/live/blog.jedeop.dev/chain.pem
+  frontend_dist: {}
+  caddy_data: {}
+  caddy_config: {}
