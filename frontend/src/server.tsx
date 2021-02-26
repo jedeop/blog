@@ -71,10 +71,10 @@ app.use(async ctx => {
             ${sheet.getStyleTags()}
         </head>
         <body ${helmet.bodyAttributes.toString()}>
+          <div id="root">${content}</div>
           <noscript>
             이 웹사이트를 사용하기 위해서는 JavaScript를 허용해야합니다.
           </noscript>
-          <div id="root">${content}</div>
           <script>window.__APOLLO_STATE__=${JSON.stringify(initialState).replace(/</g, "\\u003c")};</script>
           ${webExtractor.getScriptTags()}
         </body>

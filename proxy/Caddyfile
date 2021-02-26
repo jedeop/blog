@@ -5,8 +5,8 @@ encode zstd gzip
 @static {
 	path /dist/* /fonts/* /robots.txt /favicon.png
 }
-@not_static {
-	not path /dist/* /fonts/* /robots.txt /favicon.png
+@frontend {
+	not path /dist/* /fonts/* /robots.txt /favicon.png /api/*
 }
 
 route @static {
@@ -18,12 +18,18 @@ route @static {
 	}
 }
 
-route @not_static {
+route @frontend {
 	header {
 		Cache-Control "no-store"
 	}
-	reverse_proxy /api/* http://backend:7878
 	reverse_proxy /* http://frontend:3000
+}
+
+route /api/* {
+	header {
+		Cache-Control "no-store"
+	}
+	reverse_proxy http://backend:7878
 }
 
 tls {

@@ -54,7 +54,7 @@ export default function Post(): ReactElement {
         <meta property="og:type" content="article" />
         <meta property="og:title" content={`${post.title}`} />
         <meta property="og:description" content={post.summary} />
-        <meta property="og:image" content={`/api/thumb/${post.postId}`} />
+        <meta property="og:image" content={`https://blog.jedeop.dev/api/thumb/${post.postId}`} />
         <meta property="og:image:width" content="1280" />
         <meta property="og:image:height" content="720" />
         <meta property="og:article:published_time" content={data.post.createdAt} />

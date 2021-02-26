@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
   
   :root {
     --primary-color:hsl(168, 52%, 59%);
-    --primary-dark-color: hsl(168, 52%, 47%);
+    --primary-dark-color: hsl(168, 52%, 42%);
     --link-color: var(--primary-color);
 
     --fg-color: #000000;
