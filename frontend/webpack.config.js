@@ -17,7 +17,7 @@ const getConfig = (mode) => {
     watch: isDevMode,
     entry: `./src/${mode}.tsx`,
     output: {
-      filename: "[name].[chunkhash].js",
+      filename: isServer ? "[name].js" : "[name].[chunkhash].js",
       path: path.resolve(__dirname, `dist/${mode}/`),
       publicPath: "/dist/",
     },

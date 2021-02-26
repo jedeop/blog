@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
     ports:
       - 80:80
-      - 443:443
+      - 8443:443
     volumes: 
       - frontend_dist:/data/dist:ro
       - caddy_data:/data
