@@ -1,11 +1,13 @@
 import React, {ReactElement} from "react";
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
-import SyntaxHighlighter from "react-syntax-highlighter";
 import github from "react-syntax-highlighter/dist/cjs/styles/hljs/github";
 import gfm from "remark-gfm";
 import InPostLink from "./inPostLink";
 import Heading, { slugger } from "./heading";
+import loadable from "@loadable/component";
+
+const SyntaxHighlighter = loadable(() => import("react-syntax-highlighter"));
 
 const renderers = {
   code: function MDCode({language, value}: {language: string, value: React.ReactNode}) {
