@@ -40,7 +40,7 @@ services:
       - 80:80
       - 8443:443
     volumes: 
-      - frontend_dist:/data/dist:ro
+      - frontend_dist:/srv/dist:ro
       - caddy_data:/data
       - caddy_config:/config
     environment:
