@@ -2,7 +2,6 @@
   "name": "client",
   "version": "1.0.0",
   "private": true,
-  "license": "MIT",
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack",
