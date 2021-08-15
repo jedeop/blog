@@ -1,10 +1,7 @@
 version: "3.8"
 services:
   frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: jedeop/blog_frontend
+    image: ghcr.io/jedeop/blog_frontend:main
     container_name: frontend
     restart: always
     volumes: 
@@ -19,10 +16,7 @@ services:
       - 3000
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: jedeop/blog_backend
+    image: ghcr.io/jedeop/blog_backend:main
     container_name: backend
     restart: always
     env_file: 
@@ -32,8 +26,7 @@ services:
       - 7878
 
   proxy:
-    build: ./proxy
-    image: jedeop/blog_proxy
+    image: ghcr.io/jedeop/blog_proxy:main
     container_name: proxy
     restart: unless-stopped
     ports:
@@ -47,8 +40,7 @@ services:
       SITE_ADDRESS: blog.jedeop.dev
 
   db:
-    build: ./db
-    image: jedeop/blog_db
+    image: ghcr.io/jedeop/blog_db:main
     container_name: db
     restart: always
     env_file: 

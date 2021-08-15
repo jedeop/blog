@@ -27,11 +27,8 @@ docker-compose up -d
 ```
 
 ### 프로덕션용 서버 실행하기
-다음 명령어로 프로덕션용 서버를 열 수 있습니다. `80`, `443` 포트가 열려 있어야 합니다.
+다음 명령어로 프로덕션용 서버를 열 수 있습니다. GitHub Packages에서 이미지를 pull합니다.
+SSL 인증서 발급을 위해 `80`, `443` 포트가 둘 다 열려 있어야 합니다.
 ```sh
 docker-compose --file prod.docker-compose.yml up -d
-```
-다음 명령어를 실행하면 미리 빌드된 docker 이미지를 가져올 수 있습니다. 이 명령어를 실행 한 뒤 위 명령어를 실행하면 docker 이미지를 빌드하는 과정을 생략 할 수 있습니다.
-```sh
-docker-compose --file prod.docker-compose.yml pull
 ```
