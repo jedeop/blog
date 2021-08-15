@@ -6,6 +6,7 @@ mod utils;
 
 use std::{env, sync::Arc, time::Duration};
 
+use async_graphql::extensions::Logger;
 use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use async_graphql::{EmptySubscription, Schema};
 use auth::google_oauth2;
@@ -31,6 +32,7 @@ async fn main() -> anyhow::Result<()> {
 
     let schema = Schema::build(QueryRoot, MutationRoot, EmptySubscription)
         .data(Arc::clone(&db))
+        .extension(Logger)
         .finish();
     println!("Server Up!");
 

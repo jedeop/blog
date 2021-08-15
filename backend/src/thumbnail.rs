@@ -59,7 +59,7 @@ impl Thumbnail {
         let svg = thumb.render()?;
 
         let mut opt = usvg::Options {
-            font_family: "IBM Plex Sans KR".to_string(),
+            font_family: "Pretendard".to_string(),
             ..Default::default()
         };
         opt.fontdb.load_system_fonts();

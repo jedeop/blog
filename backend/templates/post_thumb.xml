@@ -5,52 +5,46 @@
   <path d="M19.506 190.5L293.423 0h45.244v190.5z" fill="#4ac3ae"/>
   <path d="M49.423 190.5L338.667 32.147V190.5z" fill="#61cdb7"/>
   {# title #}
-  <text y="27.367" x="14.825" style="line-height:1.25" font-weight="400" font-size="15.875" font-family="sans-serif" stroke-width=".265">
+  <text y="30" x="15" font-weight="800" font-size="16" font-family="Pretendard">
     {% for line in title %}
-      <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Bold'" y="{{ 27 + 20 * loop.index0 }}.367" x="14.825" font-weight="700" font-family="IBM Plex Sans KR">
+      <tspan x="15" y="{{ 30 + 16 * loop.index0 }}">
         {{ line }}
       </tspan>
     {% endfor %}
   </text>
   {# summary #}
-  <text style="line-height:1.25" x="14.148" y="61.446" font-weight="400" font-size="12.347" font-family="sans-serif" stroke-width=".265">
+  <text x="15" y="63" font-weight="300" font-size="12" font-family="Pretendard">
     {% for line in summary %}
-      <tspan x="14.148" y="{{ 61 + 16 * loop.index0 }}.446" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">
+      <tspan x="15" y="{{ 63 + 12 * loop.index0 }}">
         {{ line }}
       </tspan>
     {% endfor %}
   </text>
   {# tag #}
-  <text y="149.425" x="14.1" style="line-height:1.25" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265">
-    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="149.425" x="14.1" font-weight="300" font-family="IBM Plex Sans KR">
+  <text x="15" y="150" font-weight="300" font-size="10" font-family="Pretendard">
       {% for tag in tags %}
         #{{ tag }}
       {% endfor %} 
-    </tspan>
   </text>
-  <g transform="matrix(.5 0 0 .5 14 156.383)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(.5 0 0 .5 15 156)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect ry="2" rx="2" height="18" width="18" y="4" x="3"/>
     <path d="M16 2v4M8 2v4M3 10h18"/>
   </g>
-  <g transform="matrix(.5 0 0 .5 91.333 156.683)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(.5 0 0 .5 85 156)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle r="10" cy="12" cx="12"/>
     <path d="M12 6v6l4 2"/>
   </g>
   {# date #}
-  <text y="96.288" x="224.228" style="line-height:1.25" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -195.624 69.69)">
-    <tspan style="-inkscape-font-specification:'IBM Plex Sans KR Light'" y="96.288" x="224.228" font-weight="300" font-family="IBM Plex Sans KR">
+  <text x="28" y="166" font-weight="300" font-size="10" font-family="Pretendard">
       {{ date }}
-    </tspan>
   </text>
   {# read time #}
-  <text style="line-height:1.25" x="300.891" y="96.288" font-weight="400" font-size="10.583" font-family="sans-serif" stroke-width=".265" transform="matrix(1 0 0 1.00001 -195.624 69.69)">
-    <tspan x="300.891" y="96.288" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">
+  <text x="100" y="166" font-weight="300" font-size="10" font-family="Pretendard">
       {{ read_time }}분
-    </tspan>
   </text>
   {# license #}
-  <text style="line-height:1.25" x="14.73" y="179.599" font-weight="400" font-size="5.997" font-family="sans-serif" stroke-width=".265">
-    <tspan x="14.73" y="179.599" style="-inkscape-font-specification:'IBM Plex Sans KR Light'" font-weight="300" font-family="IBM Plex Sans KR">© Font: IBM Plex Sans KR, Icon: feather by @colebemis</tspan>
+  <text x="15" y="180" font-weight="300" font-size="6" font-family="Pretendard">
+    © Font: Pretendard, Icon: feather by @colebemis
   </text>
   {# logo #}
   <path d="M261.22 161.66v4.29h5.801l-7.16 12.405h6.296l4.722-8.208 1.728-3.734 1.45 3.086 4.475 8.856h47.182v-4.353h-3.32l.563-6.547h-4.918l-.563 6.547h-5.106l.564-6.547h-4.918l-.564 6.547h-19.58v-8.019h37.842v-4.323h-42.916zm16.201 4.29h5.377v10.293z" fill="#fff"/>
