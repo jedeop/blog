@@ -19,39 +19,35 @@ env:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        image: [frontend, backend, proxy, db]
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      # Login against a Docker registry
-      # https://github.com/docker/login-action
+        
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      # Extract metadata (tags, labels) for Docker
-      # https://github.com/docker/metadata-action
+          
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      # Build and push Docker image with Buildx
-      # https://github.com/docker/build-push-action
-      - name: Build and push Docker image (frontend)
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}_${{ matrix.image }}
+          
+      - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./frontend
-          file: ./frontend/Dockerfile
+          context: ./${{ matrix.image }}
+          file: ./${{ matrix.image }}/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}_frontend
+          labels: ${{ steps.meta.outputs.labels }}
