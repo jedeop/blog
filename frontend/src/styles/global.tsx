@@ -5,15 +5,16 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-family: 'IBM Plex Sans KR', sans-serif;
-
     background-color: var(--bg-color);
     color: var(--fg-color);
   }
   
   input, textarea {
-    font-family: 'IBM Plex Sans KR', sans-serif;
     color: var(--fg-color);
+  }
+  
+  html, body, input, textarea {
+    font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   }
 
   a {

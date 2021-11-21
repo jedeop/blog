@@ -15,7 +15,7 @@ const Login = styled.a`
   }
 `;
 const Text = styled.div`
-  font-family: 'Roboto', 'IBM Plex Sans KR';
+  font-family: 'Roboto', 'Pretendard Variable';
   margin-left: 28.8px;
   margin-right: 15px;
   font-size: 16.8px;
