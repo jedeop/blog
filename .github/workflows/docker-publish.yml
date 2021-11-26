@@ -18,7 +18,7 @@ jobs:
   build:
     strategy:
       matrix:
-        image: [frontend, backend, proxy, db]
+        image: [frontend, backend, proxy]
     env:
       # github.repository as <account>/<repo>
       IMAGE_NAME: ${{ github.repository }}_${{ matrix.image }}

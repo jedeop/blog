@@ -47,7 +47,7 @@ services:
       SITE_ADDRESS: localhost
 
   db:
-    build: ./db
+    image: postgres:14-alpine
     container_name: db
     restart: on-failure
     env_file: 

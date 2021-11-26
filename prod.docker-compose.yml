@@ -40,7 +40,7 @@ services:
       SITE_ADDRESS: blog.jedeop.dev
 
   db:
-    image: ghcr.io/jedeop/blog_db:main
+    image: postgres:14-alpine
     container_name: db
     restart: always
     env_file: 
