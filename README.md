@@ -9,8 +9,8 @@
 ### 백엔드 ([/backend](/backend))
 백엔드는 Rust로 개발되었습니다. tide crate와 async-graphql crate를 사용해 GraphQL 방식으로 API를 제공합니다.
 
-### 데이터베이스 ([/db](/db))
-PostgreSQL을 사용합니다. DB스키마는 [여기서](/db/initdb.sql) 확인하실 수 있습니다.
+### 데이터베이스
+PostgreSQL을 사용합니다.
 
 ### 웹서버 ([/proxy](/proxy))
 웹서버는 Caddy를 사용합니다. 모든 HTTP 요청은 Caddy를 거쳐가며 요청 주소에 따라 프론트엔드나 백엔드로 reverse proxy 하거나 정적 파일을 제공하는 역할을 합니다.
