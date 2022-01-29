@@ -3,6 +3,7 @@ use chrono::FixedOffset;
 use sqlx::{types::Uuid, PgPool, Row};
 
 use crate::model::{
+    comment::{Comment, CommentInput},
     post::{Post, PostInput, PostPartialInput},
     series::{Series, SeriesInput},
     tag::Tag,
@@ -258,5 +259,59 @@ impl Database {
         .await?;
 
         Ok(user)
+    }
+    pub async fn get_user_by_id(&self, user_id: &str) -> Result<User> {
+        let user: User = sqlx::query_as::<_, User>(
+            "SELECT
+            user_id, name, avatar_url
+            FROM users
+            WHERE user_id = $1",
+        )
+        .bind(user_id)
+        .fetch_one(&self.pool)
+        .await?;
+
+        Ok(user)
+    }
+}
+
+impl Database {
+    pub async fn get_comment_by_id(&self, comment_id: Uuid) -> Result<Comment> {
+        let comment: Comment = sqlx::query_as::<_, Comment>(
+            "SELECT *
+            FROM comment
+            WHERE comment_id = $1",
+        )
+        .bind(comment_id)
+        .fetch_one(&self.pool)
+        .await?;
+
+        Ok(comment)
+    }
+    pub async fn get_comments_by_post(&self, post_id: Uuid) -> Result<Vec<Comment>> {
+        let comment: Vec<Comment> = sqlx::query_as::<_, Comment>(
+            "SELECT *
+            FROM comment
+            WHERE post_id = $1",
+        )
+        .bind(post_id)
+        .fetch_all(&self.pool)
+        .await?;
+
+        Ok(comment)
+    }
+    pub async fn create_comment(&self, comment: CommentInput, user_id: &str) -> Result<Comment> {
+        let comment: Comment = sqlx::query_as::<_, Comment>(
+            "INSERT INTO comment (user_id, post_id, contents)
+            VALUES ($1, $2, $3)
+            RETURNING *",
+        )
+        .bind(user_id)
+        .bind(comment.post_id)
+        .bind(comment.contents)
+        .fetch_one(&self.pool)
+        .await?;
+
+        Ok(comment)
     }
 }

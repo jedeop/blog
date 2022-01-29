@@ -1,5 +1,7 @@
 use std::env;
 
+use async_graphql::SimpleObject;
+
 use crate::auth::Service;
 
 #[derive(sqlx::FromRow)]
@@ -25,7 +27,7 @@ impl UserInput {
     }
 }
 
-#[derive(sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize, SimpleObject)]
 pub struct User {
     pub user_id: String,
     pub name: String,

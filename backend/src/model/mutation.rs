@@ -4,6 +4,7 @@ use async_graphql::{Context, FieldResult, Object};
 use sqlx::types::Uuid;
 
 use super::{
+    comment::{Comment, CommentInput},
     post::Post,
     post::{PostInput, PostPartialInput},
     series::Series,
@@ -81,5 +82,21 @@ impl MutationRoot {
         let post_group = db.create_series(series).await?;
 
         Ok(post_group)
+    }
+
+    async fn create_comment(
+        &self,
+        ctx: &Context<'_>,
+        comment: CommentInput,
+    ) -> FieldResult<Comment> {
+        let user_id = match ctx.data::<Option<User>>()? {
+            Some(user) => &user.user_id,
+            None => return Err("Not logged in".into()),
+        };
+
+        let db = ctx.data::<Arc<Database>>()?;
+        let comment = db.create_comment(comment, user_id).await?;
+
+        Ok(comment)
     }
 }

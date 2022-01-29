@@ -5,6 +5,7 @@ use chrono::DateTime;
 use sqlx::types::Uuid;
 
 use super::{
+    comment::Comment,
     post::{Post, PostConnection},
     series::Series,
     user::User,
@@ -81,5 +82,16 @@ impl QueryRoot {
             Some(user) => user.is_owner(),
             None => false,
         })
+    }
+
+    async fn comment(&self, ctx: &Context<'_>, comment_id: Uuid) -> FieldResult<Comment> {
+        let db = ctx.data::<Arc<Database>>()?;
+        let comment = db.get_comment_by_id(comment_id).await?;
+        Ok(comment)
+    }
+    async fn comments(&self, ctx: &Context<'_>, post_id: Uuid) -> FieldResult<Vec<Comment>> {
+        let db = ctx.data::<Arc<Database>>()?;
+        let comments = db.get_comments_by_post(post_id).await?;
+        Ok(comments)
     }
 }
