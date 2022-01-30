@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { PostInput } from "@/types/post";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PostForm from "@/components/form/postForm";
 
 const CREATE_POST = gql`
@@ -23,7 +23,7 @@ interface CreatePostVariable {
 export default function WritePage (): ReactElement {
 
   const [createPost] = useMutation<CreatePostData, CreatePostVariable>(CREATE_POST);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
@@ -49,7 +49,7 @@ export default function WritePage (): ReactElement {
           }
         })
           .then(({ data }) => {
-            history.push(`/post/${data?.createPost.postId}`);
+            navigate(`/post/${data?.createPost.postId}`);
           });
       }}
     title={[title, setTitle]}

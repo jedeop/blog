@@ -2,7 +2,7 @@ import Koa from "koa";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { ServerStyleSheet } from "styled-components";
-import { StaticRouter } from "react-router-dom";
+import { StaticRouter } from "react-router-dom/server";
 import { Helmet } from "react-helmet";
 import { ChunkExtractor } from "@loadable/server";
 import path from "path";
@@ -34,17 +34,13 @@ app.use(async ctx => {
     }),
     cache: ApolloCache(),
   });
-  const context: {
-    url?: string,
-    statusCode?: number,
-  } = {};
 
   const webExtractor = new ChunkExtractor({ statsFile: webStats });
   const sheet = new ServerStyleSheet();
 
   const jsx = webExtractor.collectChunks(
     <ApolloProvider client={client}>
-      <StaticRouter location={ctx.req.url} context={context}>
+      <StaticRouter location={ctx.req.url || "/"}>
         <ScrollToTop />
         <App />
       </StaticRouter>
@@ -82,9 +78,6 @@ app.use(async ctx => {
   `;
   ctx.set("Content-Type", "text/html");
   ctx.body = html;
-  if (context.statusCode === 404) {
-    ctx.status = 404;
-  }
 });
 
 app.listen(3000);

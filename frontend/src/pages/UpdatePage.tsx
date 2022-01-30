@@ -1,9 +1,10 @@
 import React, { ReactElement, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { PostForUpdate, PostInput } from "@/types/post";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PostForm from "@/components/form/postForm";
 import Loading from "@/components/loading";
+import NotFound from "@/components/error/notFound";
 
 const GET_POST = gql`
   query GetPostForUpdate($postId: UUID!) {
@@ -42,15 +43,12 @@ interface UpdatePostVariable {
   post: PostInput,
 }
 
-interface Params {
-  postId: string,
-}
-
 export default function WritePage (): ReactElement {
-  const { postId } = useParams<Params>();
+  const { postId } = useParams<"postId">();
+  if (!postId) return <NotFound />;
 
   const [updatePost] = useMutation<UpdatePostData, UpdatePostVariable>(UPDATE_POST);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isInited, setIsInited] = useState(false);
   const [title, setTitle] = useState("");
@@ -90,7 +88,7 @@ export default function WritePage (): ReactElement {
           }
         })
           .then(({ data }) => {
-            history.push(`/post/${data?.updatePost.postId}`);
+            navigate(`/post/${data?.updatePost.postId}`);
           });
       }}
     title={[title, setTitle]}

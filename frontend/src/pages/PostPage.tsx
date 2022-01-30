@@ -7,10 +7,7 @@ import PostContents from "@/components/post/postContents";
 import Loading from "@/components/loading";
 import { Helmet } from "react-helmet";
 import PostManage from "@/components/post/postManage";
-
-interface Params {
-  postId: string,
-}
+import NotFound from "@/components/error/notFound";
 
 const GET_POST = gql`
   query ($id: UUID!) {
@@ -40,7 +37,8 @@ interface GetPostVariable {
 }  
 
 export default function Post(): ReactElement {
-  const { postId } = useParams<Params>();
+  const { postId } = useParams<"postId">();
+  if (!postId) return <NotFound />;
   const { loading, error, data } = useQuery<GetPostData, GetPostVariable>(GET_POST, { variables: { id: postId } });
   
   if (loading) return <Loading />;

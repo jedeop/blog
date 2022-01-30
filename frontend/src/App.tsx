@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import loadable from "@loadable/component";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
@@ -40,27 +40,14 @@ export default function App(): ReactElement {
       </Helmet>
       <Header />
       <main>
-        <Switch>
-          <Route exact path="/" render={() => <HomePage />} />
-          <Route exact path="/post/:postId">
-            <PostPage />
-          </Route>
-          <Route exact path="/write">
-            <WritePage />
-          </Route>
-          <Route exact path="/write/:postId">
-            <UpdatePage />
-          </Route>
-          <Route exact path="/login">
-            <LoginPage />
-          </Route>
-          <Route
-            render={({ staticContext }) => {
-              if (staticContext) staticContext.statusCode = 404;
-              return <NotFound />;
-            }}
-          />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/post/:postId" element={<PostPage />} />
+          <Route path="/write" element={<WritePage />} />
+          <Route path="/write/:postId" element={<UpdatePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
       <footer>
       </footer>
