@@ -1,4 +1,4 @@
-FROM node:14-alpine3.12
+FROM node:16-alpine3.14
 
 WORKDIR /app
 
@@ -7,7 +7,8 @@ RUN apk --no-cache add tzdata && \
     echo "Asia/Seoul" > /etc/timezone \
     apk del tzdata
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml .pnp.* ./
+COPY .yarn .yarn
 RUN yarn
 
 COPY . .
